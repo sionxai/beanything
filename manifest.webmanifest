@@ -1,0 +1,18 @@
+{
+  "name": "Be Anything",
+  "short_name": "BeAnything",
+  "lang": "ko",
+  "display": "standalone",
+  "start_url": "./",
+  "background_color": "#f4efe7",
+  "theme_color": "#2f6a53",
+  "description": "하고 싶은 일을 현실적인 경로로 바꾸고 첫 결과물과 첫 수익 시도까지 이어주는 앱",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

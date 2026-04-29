@@ -1,0 +1,326 @@
+{
+  "careers": [
+    {
+      "slug": "community-operations-coordinator",
+      "name": "커뮤니티 운영 코디네이터",
+      "category": "community_operations",
+      "short_description": "사람과 정보를 연결하고, 운영 흐름을 정리하는 역할",
+      "riasec_weights": {
+        "R": 0.05,
+        "I": 0.1,
+        "A": 0.1,
+        "S": 0.35,
+        "E": 0.2,
+        "C": 0.2
+      },
+      "personality_preferences": {
+        "O": 0.55,
+        "C": 0.7,
+        "E": 0.55,
+        "A": 0.65,
+        "N": 0.4
+      },
+      "training_time_category": "low",
+      "income_mode": "short_term",
+      "remote_option": "hybrid",
+      "physical_demand": "low",
+      "transition_cost_score": 35,
+      "demand_score": 60,
+      "age_friendly_score": 75,
+      "metadata": {
+        "keywords": [
+          "운영",
+          "조율",
+          "커뮤니티",
+          "사람 연결"
+        ],
+        "avoid_if": [
+          "강한 영업 선호",
+          "매우 빠른 현장 업무 선호"
+        ],
+        "first_step_templates": [
+          "관심 있는 커뮤니티 운영 사례 3개를 찾아 공통점을 메모하세요.",
+          "내가 해본 조율/운영 경험 3가지를 적어보세요."
+        ]
+      }
+    },
+    {
+      "slug": "education-program-assistant",
+      "name": "교육 프로그램 운영 보조",
+      "category": "education_support",
+      "short_description": "교육 일정, 참가자, 자료를 관리하며 프로그램이 잘 돌아가게 돕는 역할",
+      "riasec_weights": {
+        "R": 0.05,
+        "I": 0.1,
+        "A": 0.1,
+        "S": 0.3,
+        "E": 0.15,
+        "C": 0.3
+      },
+      "personality_preferences": {
+        "O": 0.5,
+        "C": 0.75,
+        "E": 0.45,
+        "A": 0.65,
+        "N": 0.35
+      },
+      "training_time_category": "low",
+      "income_mode": "short_term",
+      "remote_option": "onsite",
+      "physical_demand": "low",
+      "transition_cost_score": 30,
+      "demand_score": 58,
+      "age_friendly_score": 78,
+      "metadata": {
+        "keywords": [
+          "교육",
+          "운영",
+          "정리",
+          "지원"
+        ],
+        "avoid_if": [
+          "강한 영업",
+          "불규칙 야간근무"
+        ],
+        "first_step_templates": [
+          "지역 교육기관 또는 온라인 강의 운영 사례를 3개 찾아보세요.",
+          "내가 잘하는 정리/안내/지원 경험을 메모하세요."
+        ]
+      }
+    },
+    {
+      "slug": "administrative-support-specialist",
+      "name": "행정/사무 지원 스페셜리스트",
+      "category": "admin_support",
+      "short_description": "문서, 일정, 커뮤니케이션을 체계적으로 지원하는 역할",
+      "riasec_weights": {
+        "R": 0.05,
+        "I": 0.05,
+        "A": 0.05,
+        "S": 0.15,
+        "E": 0.1,
+        "C": 0.6
+      },
+      "personality_preferences": {
+        "O": 0.4,
+        "C": 0.85,
+        "E": 0.35,
+        "A": 0.55,
+        "N": 0.3
+      },
+      "training_time_category": "low",
+      "income_mode": "immediate",
+      "remote_option": "hybrid",
+      "physical_demand": "low",
+      "transition_cost_score": 25,
+      "demand_score": 65,
+      "age_friendly_score": 80,
+      "metadata": {
+        "keywords": [
+          "사무",
+          "행정",
+          "문서",
+          "정리"
+        ],
+        "avoid_if": [
+          "변동이 큰 역할 선호",
+          "창의 프로젝트 선호"
+        ],
+        "first_step_templates": [
+          "내가 잘하는 정리/관리 습관 3개를 적어보세요.",
+          "사무지원 채용 공고 3개를 보고 공통 요구 역량을 메모하세요."
+        ]
+      }
+    },
+    {
+      "slug": "customer-support-specialist",
+      "name": "고객지원/상담 스페셜리스트",
+      "category": "customer_support",
+      "short_description": "고객 문의를 해결하고 경험을 개선하는 역할",
+      "riasec_weights": {
+        "R": 0.05,
+        "I": 0.05,
+        "A": 0.05,
+        "S": 0.35,
+        "E": 0.25,
+        "C": 0.25
+      },
+      "personality_preferences": {
+        "O": 0.45,
+        "C": 0.65,
+        "E": 0.55,
+        "A": 0.7,
+        "N": 0.35
+      },
+      "training_time_category": "low",
+      "income_mode": "immediate",
+      "remote_option": "mixed",
+      "physical_demand": "low",
+      "transition_cost_score": 28,
+      "demand_score": 68,
+      "age_friendly_score": 72,
+      "metadata": {
+        "keywords": [
+          "상담",
+          "도움",
+          "응대",
+          "문제 해결"
+        ],
+        "avoid_if": [
+          "감정 소모 큰 대면 응대 회피",
+          "고강도 성과 압박 회피"
+        ],
+        "first_step_templates": [
+          "내가 타인을 도와준 경험 3개를 정리하세요.",
+          "고객지원 직무 소개 글 2개를 읽고 내게 맞는 점/걱정되는 점을 적어보세요."
+        ]
+      }
+    },
+    {
+      "slug": "content-curation-coordinator",
+      "name": "콘텐츠 큐레이션 코디네이터",
+      "category": "content_support",
+      "short_description": "정보를 정리하고, 필요한 사람에게 맞게 선별해 전달하는 역할",
+      "riasec_weights": {
+        "R": 0.05,
+        "I": 0.2,
+        "A": 0.2,
+        "S": 0.2,
+        "E": 0.1,
+        "C": 0.25
+      },
+      "personality_preferences": {
+        "O": 0.65,
+        "C": 0.6,
+        "E": 0.35,
+        "A": 0.55,
+        "N": 0.35
+      },
+      "training_time_category": "medium",
+      "income_mode": "short_term",
+      "remote_option": "remote",
+      "physical_demand": "low",
+      "transition_cost_score": 40,
+      "demand_score": 55,
+      "age_friendly_score": 70,
+      "metadata": {
+        "keywords": [
+          "콘텐츠",
+          "정리",
+          "큐레이션",
+          "정보"
+        ],
+        "avoid_if": [
+          "대면 중심 업무 선호",
+          "즉시 수입 최우선"
+        ],
+        "first_step_templates": [
+          "관심 주제 1개를 정해 참고 자료 5개를 모아보세요.",
+          "내가 잘 정리할 수 있는 정보 주제를 3개 적어보세요."
+        ]
+      }
+    }
+  ],
+  "sprint_templates": [
+    {
+      "career_slug": "community-operations-coordinator",
+      "title": "커뮤니티 운영 7일 탐색",
+      "duration_days": 7,
+      "overview": "운영/조율형 역할이 나에게 맞는지 작은 과제로 확인합니다.",
+      "tasks": [
+        {
+          "day": 1,
+          "title": "끌리는 이유 3줄 적기",
+          "description": "이 역할이 왜 끌리는지 간단히 정리하세요.",
+          "estimated_minutes": 10
+        },
+        {
+          "day": 2,
+          "title": "운영 사례 3개 보기",
+          "description": "관심 있는 커뮤니티 운영 사례를 3개 찾아보세요.",
+          "estimated_minutes": 15
+        },
+        {
+          "day": 3,
+          "title": "내 전이 경험 정리",
+          "description": "조율/관리/안내 경험 3가지를 적으세요.",
+          "estimated_minutes": 15
+        },
+        {
+          "day": 4,
+          "title": "공지문 1개 써보기",
+          "description": "가상의 모임 공지문을 작성해보세요.",
+          "estimated_minutes": 20
+        },
+        {
+          "day": 5,
+          "title": "사람 응대 부담도 체크",
+          "description": "사람과 소통하는 일에서 편한 점/불편한 점을 적으세요.",
+          "estimated_minutes": 10
+        },
+        {
+          "day": 6,
+          "title": "공고/사례 다시 보기",
+          "description": "실제 역할 설명을 다시 보고 궁금한 점을 메모하세요.",
+          "estimated_minutes": 15
+        },
+        {
+          "day": 7,
+          "title": "계속/보류 결정",
+          "description": "이 방향을 계속 탐색할지 결정하세요.",
+          "estimated_minutes": 10
+        }
+      ]
+    },
+    {
+      "career_slug": "administrative-support-specialist",
+      "title": "사무/행정 지원 7일 탐색",
+      "duration_days": 7,
+      "overview": "정리와 체계화 역량이 실제로 맞는지 확인합니다.",
+      "tasks": [
+        {
+          "day": 1,
+          "title": "잘하는 정리 습관 3개 쓰기",
+          "description": "평소 잘하는 정리/관리 방식을 적으세요.",
+          "estimated_minutes": 10
+        },
+        {
+          "day": 2,
+          "title": "채용 공고 3개 보기",
+          "description": "사무지원 관련 공고 3개를 보고 공통 역량을 표시하세요.",
+          "estimated_minutes": 15
+        },
+        {
+          "day": 3,
+          "title": "문서 정리 실습",
+          "description": "기존 자료를 1개 골라 폴더/제목 체계를 정리해보세요.",
+          "estimated_minutes": 20
+        },
+        {
+          "day": 4,
+          "title": "일정 정리 실습",
+          "description": "가상의 주간 일정을 표로 정리해보세요.",
+          "estimated_minutes": 15
+        },
+        {
+          "day": 5,
+          "title": "나에게 맞는 환경 정리",
+          "description": "조용한 환경/빠른 환경 중 어디가 맞는지 적으세요.",
+          "estimated_minutes": 10
+        },
+        {
+          "day": 6,
+          "title": "부족 역량 체크",
+          "description": "추가로 익혀야 할 도구나 역량이 있는지 적으세요.",
+          "estimated_minutes": 10
+        },
+        {
+          "day": 7,
+          "title": "다음 단계 정하기",
+          "description": "지원 준비/추가 탐색/보류 중 하나를 선택하세요.",
+          "estimated_minutes": 10
+        }
+      ]
+    }
+  ]
+}

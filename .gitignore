@@ -1,0 +1,11 @@
+.DS_Store
+.claude/
+test-results/
+node_modules/
+dist/
+build/
+.env
+.env.*
+*.app/
+ima2-launch.command
+ima2-launcher.applescript
