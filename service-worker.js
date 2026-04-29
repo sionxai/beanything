@@ -1,4 +1,4 @@
-const CACHE_NAME = "beanything-v20260424aa";
+const CACHE_NAME = "beanything-v20260429a";
 const APP_ASSETS = [
   "./",
   "./index.html",
@@ -43,6 +43,13 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match("./index.html"))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cached) => cached || fetch(event.request))
   );

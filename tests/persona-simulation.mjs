@@ -1,4 +1,4 @@
-// Persona simulation — runs 5 distinct personas through the new dream-aware engine
+// Persona simulation — runs 10 distinct personas through the new dream-aware engine
 // and prints recommendations + journey to evaluate appropriateness.
 
 import { CAREERS, JOURNEY_BLUEPRINTS } from "../src/data/sample-data.js";
@@ -213,6 +213,191 @@ const PERSONAS = [
       proofNeed: "첫 모임에 5명 이상 오면 정기 모임으로 키울 자신이 생긴다.",
     },
   },
+  {
+    id: "P6",
+    label: "에세이 작가 꿈 (글쓰기 직군)",
+    dream: {
+      title: "내 이야기로 책을 쓰는 에세이 작가",
+      description: "일상을 관찰하고 글로 정리해, 1인 출판이나 소규모 출판사 통해 첫 책을 내고 싶다.",
+      whyThisMatters: "글로 정리하는 시간이 가장 나답다. 회사 일은 흩어지지만 글은 남는다.",
+      visualNote: "노트와 펜, 한 권의 작은 책, 독자 후기, 북토크 장면이 떠오른다.",
+      inspirationSlug: "studio",
+      modes: ["write", "expert"],
+      blockers: ["visibility", "money"],
+      referenceImageUrl: "",
+    },
+    profile: {
+      displayName: "정민서",
+      birthYear: 1985,
+      ageBand: getAgeBand(1985),
+      currentStatus: "employee",
+      weeklyTimeBudget: "3_5",
+      incomeUrgency: "explore_first",
+      primaryGoal: "meaning",
+      peoplePreference: "low",
+      remotePreference: "remote",
+      physicalDemandLimit: "low",
+      city: "서울",
+      experienceSummary: "마케팅 카피 7년, 사내 뉴스레터 3년 운영. 블로그 5년차.",
+    },
+    riasec: { R: 1, I: 4, A: 5, S: 3, E: 2, C: 3 },
+    bigFive: { O: 5, C: 4, E: 2, A: 4, N: 4 },
+    answers: {
+      dreamShift: "내 글이 한 사람의 하루를 차분하게 만드는 장면을 보고 싶다.",
+      fearPoint: "원고를 끝내도 아무도 안 읽을까 봐 걱정된다.",
+      stuckPoint: "주제가 너무 많아서 첫 책의 한 줄 콘셉트를 못 정하겠다.",
+      nonNegotiable: "자극적인 클릭 유도 글은 쓰고 싶지 않다.",
+      proofNeed: "뉴스레터 구독 100명 또는 첫 원고 1편이 되면 다음 단계가 보일 것 같다.",
+    },
+  },
+  {
+    id: "P7",
+    label: "베이커리 카페 꿈 (소규모 사업)",
+    dream: {
+      title: "동네에 작은 베이커리 카페를 여는 사람",
+      description: "직접 굽는 빵 5종과 차를 파는 작은 가게를 동네 골목에 열고 싶다.",
+      whyThisMatters: "손님이 매일 들르는 단골 가게가 되고 싶다. 회사보다 내 손에서 나오는 결과물이 좋다.",
+      visualNote: "오븐, 진열대 위 식빵과 스콘, 작은 테이블 4개, 단골 손님이 떠오른다.",
+      inspirationSlug: "storefront",
+      modes: ["maker", "business"],
+      blockers: ["money", "skill-gap"],
+      referenceImageUrl: "",
+    },
+    profile: {
+      displayName: "오세현",
+      birthYear: 1982,
+      ageBand: getAgeBand(1982),
+      currentStatus: "employee",
+      weeklyTimeBudget: "3_5",
+      incomeUrgency: "within_3_months",
+      primaryGoal: "meaning",
+      peoplePreference: "medium",
+      remotePreference: "onsite",
+      physicalDemandLimit: "high",
+      city: "서울",
+      experienceSummary: "홈베이킹 6년, 친구·동료에게 빵 판매 경험 있음. 회사원 12년차.",
+    },
+    riasec: { R: 4, I: 2, A: 4, S: 3, E: 4, C: 3 },
+    bigFive: { O: 4, C: 4, E: 3, A: 4, N: 3 },
+    answers: {
+      dreamShift: "내 빵을 매주 사 가는 단골 5명이 생기는 장면을 보고 싶다.",
+      fearPoint: "초기 인테리어와 장비 비용을 회수 못 할까 봐 두렵다.",
+      stuckPoint: "가게 자리, 메뉴 가짓수, 초기 자본 규모가 모두 미정이다.",
+      nonNegotiable: "공장 빵을 떼다 파는 카페는 의미가 없다.",
+      proofNeed: "팝업 행사에서 50개 이상 팔리는 경험을 한 번 해보면 자신이 생긴다.",
+    },
+  },
+  {
+    id: "P8",
+    label: "여행 영상 크리에이터 꿈 (미디어/비주얼)",
+    dream: {
+      title: "여행을 영상으로 기록하는 1인 채널 크리에이터",
+      description: "국내외 여행지를 차분하게 담은 영상 채널을 운영해 광고와 협업 수익을 만들고 싶다.",
+      whyThisMatters: "회사 휴가 외에는 자유롭게 떠나본 적이 없다. 시간과 장소를 내가 정하고 싶다.",
+      visualNote: "카메라, 삼각대, 여행지 장면, 편집 타임라인, 구독자 수가 떠오른다.",
+      inspirationSlug: "studio",
+      modes: ["visual", "write", "business"],
+      blockers: ["time", "visibility"],
+      referenceImageUrl: "",
+    },
+    profile: {
+      displayName: "윤하늘",
+      birthYear: 1990,
+      ageBand: getAgeBand(1990),
+      currentStatus: "employee",
+      weeklyTimeBudget: "1_2",
+      incomeUrgency: "explore_first",
+      primaryGoal: "flexibility",
+      peoplePreference: "medium",
+      remotePreference: "any",
+      physicalDemandLimit: "medium",
+      city: "서울",
+      experienceSummary: "회사원 5년, 인스타 팔로워 3천. 영상 편집 취미로 2년.",
+    },
+    riasec: { R: 3, I: 3, A: 5, S: 2, E: 4, C: 2 },
+    bigFive: { O: 5, C: 3, E: 4, A: 3, N: 3 },
+    answers: {
+      dreamShift: "내 영상을 보고 사람들이 그 장소를 가보고 싶다고 말하는 장면을 보고 싶다.",
+      fearPoint: "꾸준히 올렸는데 조회수가 안 나올까 봐 무섭다.",
+      stuckPoint: "채널 콘셉트가 여행 vs 일상 vs 정보 사이에서 못 정해졌다.",
+      nonNegotiable: "광고를 위해 진정성을 깎는 콘텐츠는 만들지 않는다.",
+      proofNeed: "구독 1천 명 또는 첫 협업 제안 1건이면 시간 더 투자 결심이 선다.",
+    },
+  },
+  {
+    id: "P9",
+    label: "동물 케어 꿈 (돌봄/공동체)",
+    dream: {
+      title: "유기동물을 돌보고 입양을 잇는 보호 활동가",
+      description: "유기견 임시보호와 입양 연결을 운영하고, 인근 보호소와 협력하는 작은 케어 거점을 만들고 싶다.",
+      whyThisMatters: "지나친 슬픔 없이 책임감 있게 동물을 돌보는 어른이 되고 싶다.",
+      visualNote: "임시보호 케이지, 산책 줄, 입양자 인터뷰 장면, 후원 SNS 페이지가 떠오른다.",
+      inspirationSlug: "classroom",
+      modes: ["care", "community"],
+      blockers: ["money", "skill-gap"],
+      referenceImageUrl: "",
+    },
+    profile: {
+      displayName: "장수민",
+      birthYear: 1988,
+      ageBand: getAgeBand(1988),
+      currentStatus: "career_break",
+      weeklyTimeBudget: "6_plus",
+      incomeUrgency: "within_3_months",
+      primaryGoal: "social_contribution",
+      peoplePreference: "medium",
+      remotePreference: "onsite",
+      physicalDemandLimit: "high",
+      city: "수원",
+      experienceSummary: "동물병원 보조 3년, 봉사단체 임시보호 5년 경험.",
+    },
+    riasec: { R: 4, I: 3, A: 2, S: 5, E: 3, C: 3 },
+    bigFive: { O: 4, C: 4, E: 3, A: 5, N: 3 },
+    answers: {
+      dreamShift: "한 마리가 좋은 가족에게 입양되는 장면을 매월 1건 이상 만들고 싶다.",
+      fearPoint: "보호 비용과 의료비를 감당하지 못할까 봐 두렵다.",
+      stuckPoint: "후원 구조, 입양 심사 기준, 인근 단체 협업 구조를 어떻게 짤지 막막하다.",
+      nonNegotiable: "감성 마케팅으로 동물을 도구화하는 활동은 안 한다.",
+      proofNeed: "월정기후원 30명, 입양 연결 5건이면 다음 단계로 갈 수 있다.",
+    },
+  },
+  {
+    id: "P10",
+    label: "AI 컨설턴트 꿈 (전문직 전환)",
+    dream: {
+      title: "중소기업 업무에 AI를 붙이는 1인 컨설턴트",
+      description: "현장 업무 흐름을 듣고 AI 도구로 자동화·정리해주는 작은 컨설팅을 하고 싶다.",
+      whyThisMatters: "전문성을 회사 안이 아닌 내 이름으로 쌓고 싶다.",
+      visualNote: "노트북, 화면 공유, 도구 흐름도, 사장님과의 미팅 장면이 떠오른다.",
+      inspirationSlug: "storefront",
+      modes: ["expert", "business", "teach"],
+      blockers: ["visibility", "confidence"],
+      referenceImageUrl: "",
+    },
+    profile: {
+      displayName: "강도훈",
+      birthYear: 1979,
+      ageBand: getAgeBand(1979),
+      currentStatus: "employee",
+      weeklyTimeBudget: "6_plus",
+      incomeUrgency: "within_3_months",
+      primaryGoal: "income",
+      peoplePreference: "high",
+      remotePreference: "hybrid",
+      physicalDemandLimit: "low",
+      city: "성남",
+      experienceSummary: "IT 기획 14년, 사내 자동화 프로젝트 다수. 최근 1년간 AI 도구 적용 경험.",
+    },
+    riasec: { R: 2, I: 5, A: 2, S: 4, E: 5, C: 4 },
+    bigFive: { O: 5, C: 5, E: 4, A: 3, N: 2 },
+    answers: {
+      dreamShift: "한 사장님이 내 컨설팅 후 업무 시간을 절반으로 줄였다고 말하는 장면을 보고 싶다.",
+      fearPoint: "내 가격이 시장에서 안 통할까 봐 걱정된다.",
+      stuckPoint: "첫 고객을 어디서 어떻게 만나서 사례를 만들지 모르겠다.",
+      nonNegotiable: "결과 없는 트렌드 발표 강의식 컨설팅은 하지 않는다.",
+      proofNeed: "유료 파일럿 2건 + 후기 1개면 가격을 자신 있게 부를 수 있다.",
+    },
+  },
 ];
 
 function evaluatePersona(persona) {
@@ -260,6 +445,11 @@ function dreamMatchVerdict(persona, top, journey) {
     P3: ["행정", "사무", "문서", "정리", "운영", "어시스턴트"],
     P4: ["강의", "교육", "코치", "강사", "수업", "튜터", "워크샵", "워크숍"],
     P5: ["커뮤니티", "모임", "지역", "운영", "퍼실리테이", "리더", "공동체"],
+    P6: ["작가", "에세이", "글", "원고", "뉴스레터", "출판", "편집", "쓰기", "북", "콘텐츠"],
+    P7: ["베이커리", "카페", "빵", "베이킹", "메이커", "스튜디오", "셀렉트숍", "운영자", "팝업", "스토어"],
+    P8: ["영상", "유튜브", "크리에이터", "촬영", "편집", "비주얼", "포토", "숏폼", "채널", "프로듀서"],
+    P9: ["케어", "동물", "펫", "보호", "돌봄", "입양", "봉사", "자원봉사", "공동체", "비영리"],
+    P10: ["컨설턴트", "컨설팅", "전문가", "AI", "ai", "자동화", "전략", "어시스턴트", "코치", "도구"],
   };
   const keys = dreamWords[persona.id] || [];
   const recName = top?.name || "";
@@ -337,7 +527,7 @@ function printResult(result) {
   console.log(`  → ${v.verdict}`);
 }
 
-console.log("Be Anything — 5 페르소나 시뮬레이션");
+console.log("Be Anything — 10 페르소나 시뮬레이션");
 console.log(`실행: ${new Date().toISOString()}  /  CAREERS: ${CAREERS.length}개  /  JOURNEY tracks: ${Object.keys(JOURNEY_BLUEPRINTS).length}개`);
 
 const results = PERSONAS.map(evaluatePersona);

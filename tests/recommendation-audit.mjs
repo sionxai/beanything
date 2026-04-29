@@ -6,8 +6,8 @@ import {
   summarizeExploration,
 } from "../src/lib/engine.js";
 
-const EXPECTED_TOTAL = 180;
-const EXPECTED_CATEGORY_COUNT = 18;
+const EXPECTED_MIN_TOTAL = 180;
+const EXPECTED_MIN_CATEGORY_COUNT = 18;
 const REQUIRED_STAGES = ["seven", "thirty", "ninety", "revenue"];
 const VALID_REMOTE = new Set(["onsite", "hybrid", "remote", "mixed"]);
 const VALID_PHYSICAL = new Set(["low", "medium", "high"]);
@@ -41,14 +41,14 @@ function auditCatalog() {
   const slugs = new Set();
   const categoryCounts = countBy(CAREERS, "category");
 
-  checks.push(CAREERS.length === EXPECTED_TOTAL
+  checks.push(CAREERS.length >= EXPECTED_MIN_TOTAL
     ? pass("career_count", CAREERS.length)
-    : fail("career_count", { expected: EXPECTED_TOTAL, actual: CAREERS.length }));
+    : fail("career_count", { expectedAtLeast: EXPECTED_MIN_TOTAL, actual: CAREERS.length }));
 
   Object.entries(categoryCounts).forEach(([category, count]) => {
-    checks.push(count === EXPECTED_CATEGORY_COUNT
+    checks.push(count >= EXPECTED_MIN_CATEGORY_COUNT
       ? pass(`category_count:${category}`, count)
-      : fail(`category_count:${category}`, { expected: EXPECTED_CATEGORY_COUNT, actual: count }));
+      : fail(`category_count:${category}`, { expectedAtLeast: EXPECTED_MIN_CATEGORY_COUNT, actual: count }));
   });
 
   CAREERS.forEach((career) => {

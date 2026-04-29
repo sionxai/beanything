@@ -127,6 +127,20 @@ const SHORT_DOMAIN_KEYWORDS = new Set([
   "마음",
   "상담",
   "심리",
+  "감정",
+  "상실",
+  "애도",
+  "추모",
+  "이별",
+  "저널링",
+  "영상",
+  "브이로그",
+  "유튜브",
+  "행정",
+  "사무",
+  "시니어",
+  "어르신",
+  "커뮤니티",
 ]);
 
 function clamp(value, min = 0, max = 100) {
@@ -238,6 +252,123 @@ function isSearchableKeyword(keyword) {
   return normalized.length >= 3 || SHORT_DOMAIN_KEYWORDS.has(normalized);
 }
 
+function compactText(value) {
+  return normalizeText(value).replace(/\s+/g, "");
+}
+
+function getCareerMatchText(career) {
+  return normalizeText(
+    [
+      career.slug,
+      career.name,
+      career.shortDescription,
+      career.proofOfWork,
+      ...(career.keywords || []),
+      ...(career.dreamSignals || []),
+    ].join(" ")
+  );
+}
+
+function intentHasAny(intentText, words) {
+  const compactIntent = compactText(intentText);
+  return words.some((word) => {
+    const normalized = normalizeText(word);
+    return keywordAppearsAffirmatively(intentText, normalized) || compactIntent.includes(compactText(normalized));
+  });
+}
+
+function careerHasAny(career, words) {
+  const text = getCareerMatchText(career);
+  const compact = compactText(text);
+  return words.some((word) => text.includes(normalizeText(word)) || compact.includes(compactText(word)));
+}
+
+function careerHasAllTermGroups(career, groups) {
+  return groups.every((group) => careerHasAny(career, group));
+}
+
+function careerDreamTerms(career) {
+  const nameTerms = normalizeText(career.name)
+    .split(/[·/\s]+/)
+    .map((term) => term.trim())
+    .filter((term) => term.length >= 2 && !KEYWORD_STOPWORDS.has(term));
+  const keywordTerms = (career.keywords || [])
+    .map((keyword) => normalizeText(keyword).trim())
+    .filter((keyword) => keyword.length >= 2 && !KEYWORD_STOPWORDS.has(keyword));
+
+  return unique([...nameTerms, ...keywordTerms]);
+}
+
+function scoreDreamTermFit(dream, career) {
+  const dreamText = collectDreamIntentText(dream, {});
+  const compactDream = compactText(dreamText);
+  const compactCareerName = compactText(career.name);
+  const seniorCommunityIntent =
+    intentHasAny(dreamText, ["시니어", "어르신", "중장년"]) &&
+    intentHasAny(dreamText, ["모임", "커뮤니티", "동네", "활동", "연결"]);
+  let score = 0;
+
+  if (compactCareerName && compactDream.includes(compactCareerName)) score += 14;
+
+  const directTerms = careerDreamTerms(career).filter((term) => {
+    const compactTerm = compactText(term);
+    return keywordAppearsAffirmatively(dreamText, term) || (compactTerm.length >= 2 && compactDream.includes(compactTerm));
+  });
+  score += Math.min(12, directTerms.length * 4);
+
+  if (
+    intentHasAny(dreamText, ["여행"]) &&
+    intentHasAny(dreamText, ["영상", "브이로그", "vlog", "유튜브", "채널", "크리에이터"]) &&
+    careerHasAllTermGroups(career, [["여행"], ["영상", "브이로그", "vlog", "유튜브", "채널", "크리에이터"]])
+  ) {
+    score += 14;
+  }
+
+  if (
+    intentHasAny(dreamText, ["상담", "심리", "마음", "감정", "정서", "1:1", "대화"]) &&
+    careerHasAny(career, ["상담", "심리", "마음", "감정", "정서", "저널링", "세션", "1:1"])
+  ) {
+    score += 12;
+  }
+
+  if (
+    intentHasAny(dreamText, ["행정", "사무", "문서", "엑셀", "오피스"]) &&
+    careerHasAny(career, ["행정", "사무", "문서", "엑셀", "오피스", "자료", "일정"])
+  ) {
+    score += 10;
+  }
+
+  if (seniorCommunityIntent && careerHasAllTermGroups(career, [["시니어", "어르신", "중장년"], ["모임", "커뮤니티", "활동", "호스트", "프로그램"]])) {
+    score += 14;
+  }
+  if (seniorCommunityIntent && careerHasAny(career, ["디지털", "스마트폰"]) && !intentHasAny(dreamText, ["디지털", "스마트폰", "앱"])) {
+    score -= 8;
+  }
+
+  if (
+    intentHasAny(dreamText, ["도예", "도자", "도자기", "세라믹", "공방", "흙"]) &&
+    careerHasAny(career, ["도예", "도자", "도자기", "세라믹", "공방", "흙"])
+  ) {
+    score += 12;
+  }
+
+  if (
+    intentHasAny(dreamText, ["베이커리", "베이킹", "빵", "디저트"]) &&
+    careerHasAny(career, ["베이커리", "베이킹", "빵", "디저트", "카페"])
+  ) {
+    score += 10;
+  }
+
+  if (
+    intentHasAny(dreamText, ["상실", "애도", "추모", "이별"]) &&
+    careerHasAny(career, ["상실", "애도", "추모", "이별"])
+  ) {
+    score += 14;
+  }
+
+  return clamp(score, 0, 24);
+}
+
 function keywordAppearsAffirmatively(intentText, keyword) {
   let cursor = 0;
   while (cursor < intentText.length) {
@@ -309,6 +440,10 @@ const NARROW_DOMAIN_RULES = [
   {
     pattern: /심리|상담|마음|감정|정서|애도|상실|치유|mental|counsel/i,
     slugs: [
+      "mind-conversation-session-guide",
+      "nonclinical-counseling-assistant",
+      "emotional-journaling-coach",
+      "career-transition-coach",
       "grief-journaling-guide",
       "mindful-journaling-guide",
       "caregiver-support-group-host",
@@ -317,6 +452,49 @@ const NARROW_DOMAIN_RULES = [
     ],
     keywords: ["심리", "상담", "마음", "감정", "정서", "애도", "상실", "치유", "mental", "counsel"],
     softSignals: ["care", "guide"],
+  },
+  {
+    pattern: /여행|영상|브이로그|vlog|유튜브|채널|크리에이터/i,
+    slugs: [
+      "travel-video-creator",
+      "life-vlog-channel-operator",
+      "travel-photo-video-storyteller",
+      "shortform-video-stylist",
+      "scriptwriter-for-video",
+      "travel-itinerary-writer",
+    ],
+    keywords: ["여행", "영상", "브이로그", "vlog", "유튜브", "채널", "크리에이터", "촬영", "편집"],
+    softSignals: ["visual", "write"],
+  },
+  {
+    pattern: /행정|사무|문서|엑셀|오피스|일정|자료/i,
+    slugs: [
+      "admin-restart-assistant",
+      "project-coordinator",
+      "school-admin-supporter",
+      "clinic-admin-coordinator",
+      "grant-admin-specialist",
+      "construction-office-coordinator",
+      "patent-admin-assistant",
+      "virtual-assistant",
+      "data-cleanup-assistant",
+    ],
+    keywords: ["행정", "사무", "문서", "엑셀", "오피스"],
+    softSignals: ["organize", "expert"],
+  },
+  {
+    pattern: /시니어|어르신|중장년|커뮤니티|모임|활동/i,
+    slugs: [
+      "senior-community-host",
+      "senior-circle-program-host",
+      "senior-activity-host",
+      "walking-club-host",
+      "senior-digital-help-desk",
+      "senior-digital-life-coach",
+      "senior-life-story-interviewer",
+    ],
+    keywords: ["시니어", "어르신", "중장년"],
+    softSignals: ["community", "guide"],
   },
   {
     pattern: /강의|강사|수업|클래스|튜터|교육|커리큘럼|lecture|class|teach/i,
@@ -546,6 +724,7 @@ function scoreDreamCloseness(dream, career) {
   if (dream.blockers?.includes("visibility") && ["writing-media", "visual-creative"].includes(career.cluster)) {
     score -= 5;
   }
+  score += scoreDreamTermFit(dream, career);
 
   return clamp(score);
 }
@@ -596,16 +775,16 @@ function scoreDirectCareerMention(dream, profile, summary, career) {
 }
 
 function getPositiveIntentBonusCap({ dreamCloseness, directMentionFit, specificityFit }) {
-  if (directMentionFit > 0) return dreamCloseness >= 55 ? 48 : 38;
+  if (directMentionFit > 0) return dreamCloseness >= 55 ? 22 : 16;
   if (specificityFit >= 20) {
-    if (dreamCloseness >= 75) return 32;
-    if (dreamCloseness >= 60) return 24;
-    return 14;
+    if (dreamCloseness >= 75) return 16;
+    if (dreamCloseness >= 60) return 12;
+    return 8;
   }
-  if (dreamCloseness >= 85) return 28;
-  if (dreamCloseness >= 70) return 22;
-  if (dreamCloseness >= 60) return 16;
-  return 10;
+  if (dreamCloseness >= 85) return 14;
+  if (dreamCloseness >= 70) return 11;
+  if (dreamCloseness >= 60) return 8;
+  return 6;
 }
 
 function getDreamSortAdjustment({ dreamCloseness, directMentionFit, specificityFit }) {
@@ -621,8 +800,8 @@ function compareRecommendations(left, right) {
   const leftDirect = left.breakdown.directMentionFit > 0;
   const rightDirect = right.breakdown.directMentionFit > 0;
 
-  if (dreamGap >= 30 && !leftDirect && right.sortScore >= left.sortScore - 14) return 1;
-  if (dreamGap <= -30 && !rightDirect && left.sortScore >= right.sortScore - 14) return -1;
+  if (dreamGap >= 24 && !leftDirect && right.sortScore >= left.sortScore - 18) return 1;
+  if (dreamGap <= -24 && !rightDirect && left.sortScore >= right.sortScore - 18) return -1;
 
   const scoreDelta = right.sortScore - left.sortScore;
   if (Math.abs(scoreDelta) <= 4) {
@@ -845,8 +1024,10 @@ function diversityPass(items) {
 
   for (const item of items) {
     if (item.breakdown?.directMentionFit <= 0) continue;
+    const count = clusterCounts.get(item.cluster) || 0;
+    if (count >= 2) continue;
     picks.push(item);
-    clusterCounts.set(item.cluster, (clusterCounts.get(item.cluster) || 0) + 1);
+    clusterCounts.set(item.cluster, count + 1);
     if (picks.length === 5) return picks;
   }
 
@@ -874,8 +1055,8 @@ function diversityPass(items) {
 }
 
 function fitLabel(score) {
-  if (score >= 84) return "매우 가까움";
-  if (score >= 74) return "가까움";
+  if (score >= 88) return "매우 가까움";
+  if (score >= 76) return "가까움";
   if (score >= 64) return "실험해볼 만함";
   return "우회 경로";
 }
@@ -982,6 +1163,17 @@ export function generateRecommendations({ dream, profile, riasecResult, bigFiveR
     } else if (assessmentSupport < 55) {
       finalScore = Math.min(finalScore, 76);
     }
+    if (directMentionFit <= 0) {
+      const nonDirectCeiling =
+        dreamCloseness >= 96 && assessmentSupport >= 86
+          ? 96
+          : dreamCloseness >= 88 && assessmentSupport >= 74
+            ? 92
+            : 88;
+      finalScore = Math.min(finalScore, nonDirectCeiling);
+    } else {
+      finalScore = Math.min(finalScore, 98);
+    }
 
     const breakdown = {
       dreamCloseness: Math.round(dreamCloseness),
@@ -1004,8 +1196,10 @@ export function generateRecommendations({ dream, profile, riasecResult, bigFiveR
       ...displayCareer,
       finalScore: Math.round(finalScore),
       sortScore:
-        rawScore +
-        0.18 * dreamCloseness +
+        Math.min(rawScore, finalScore + 8) +
+        0.22 * dreamCloseness +
+        0.32 * Math.max(0, specificityFit) +
+        0.45 * Math.max(0, keywordFit) +
         getDreamSortAdjustment({ dreamCloseness, directMentionFit, specificityFit }),
       fitLabel: fitLabel(finalScore),
       paceLabel: isStudentProfile(profile) ? "프로젝트로 확인" : paceLabel(career),
@@ -1129,6 +1323,7 @@ export function buildJourney(recommendation, journeyBlueprints) {
 
       return {
         id: `${stageKey}-${index + 1}`,
+        day: index + 1,
         ...renderedTask,
         status: "todo",
         completedAt: null,
