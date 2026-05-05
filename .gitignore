@@ -9,3 +9,4 @@ build/
 *.app/
 ima2-launch.command
 ima2-launcher.applescript
+.vercel
