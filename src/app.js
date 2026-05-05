@@ -257,11 +257,210 @@ const STAGE_ART_BY_KEY = {
   ninety: [3, 2],
   revenue: [1, 2],
 };
+const PAINFIT_DOMAINS = {
+  physical: { label: "신체", color: "#8b3a2f" },
+  cognitive: { label: "인지", color: "#2c5f5d" },
+  repetitive: { label: "반복", color: "#6b4423" },
+  social: { label: "사회", color: "#a8541e" },
+  emotional: { label: "정서", color: "#5c3a6e" },
+  detail: { label: "디테일", color: "#3d5a3d" },
+  uncertainty: { label: "불확실성", color: "#7a4e2d" },
+};
+const PAINFIT_DOMAIN_KEYS = Object.keys(PAINFIT_DOMAINS);
+const PAINFIT_UNKNOWN_VALUE = "unknown";
+const PAINFIT_NEUTRAL_SCORE = 1.5;
+const PAINFIT_OPTIONS = [
+  { value: "0", label: "거의 영향이 없다" },
+  { value: "1", label: "피곤하지만 하루 안에 회복된다" },
+  { value: "2", label: "다음 날까지 잔상이 남는다" },
+  { value: "3", label: "며칠 이상 회복이 느리거나 회피하게 된다" },
+  { value: PAINFIT_UNKNOWN_VALUE, label: "잘 모르겠다", detail: "경험이나 기억이 없어서 판단하기 어렵다" },
+];
+const PAINFIT_QUESTIONS = [
+  { id: "p1", domain: "physical", text: "8시간 서 있는 일을 일주일 내내 했을 때 다음 주에 미치는 영향은?" },
+  { id: "p2", domain: "physical", text: "하루 종일 책상에 앉아 있는 일을 며칠 반복했을 때 신체 회복은?" },
+  { id: "p3", domain: "physical", text: "밤샘이나 불규칙한 수면 일정이 며칠 이어졌을 때 다음 회복 속도는?" },
+  { id: "p4", domain: "physical", text: "소음, 냄새, 온도 변화가 큰 환경에서 작업한 후 회복은?" },
+  { id: "c1", domain: "cognitive", text: "3시간 자료조사를 한 후 다음 날 같은 작업을 다시 시작할 때 회복은?" },
+  { id: "c2", domain: "cognitive", text: "20페이지 보고서를 처음부터 끝까지 읽는 일을 한 후 다음 날 회복은?" },
+  { id: "c3", domain: "cognitive", text: "정답 없는 모호한 문제를 며칠 붙잡고 있을 때 다음 회복은?" },
+  { id: "c4", domain: "cognitive", text: "복잡한 시스템, 구조, 관계도를 이해하느라 종일 매달린 후 회복은?" },
+  { id: "r1", domain: "repetitive", text: "같은 작업을 매일 반복하는 일을 한 달 했을 때 영향은?" },
+  { id: "r2", domain: "repetitive", text: "체크리스트대로 정해진 절차만 따르는 일을 일주일 했을 때 영향은?" },
+  { id: "r3", domain: "repetitive", text: "같은 문서를 5번 반복 검토하고 난 후 회복은?" },
+  { id: "r4", domain: "repetitive", text: "예측 가능한 루틴이 매일 반복되는 환경의 영향은?" },
+  { id: "s1", domain: "social", text: "하루에 낯선 사람 20명을 만난 다음 날 회복은?" },
+  { id: "s2", domain: "social", text: "고객 5명에게 거절당한 날의 회복은?" },
+  { id: "s3", domain: "social", text: "화가 난 사람을 응대해야 했던 날 다음 날 회복은?" },
+  { id: "s4", domain: "social", text: "낯선 사람을 설득해야 하는 일이 며칠 이어졌을 때 회복은?" },
+  { id: "e1", domain: "emotional", text: "내 결과물이 공개적으로 비판받은 후 다음 회복은?" },
+  { id: "e2", domain: "emotional", text: "강한 마감 압박이 며칠 이어졌을 때 회복은?" },
+  { id: "e3", domain: "emotional", text: "큰 책임을 혼자 져야 하는 상황에서 다음 회복은?" },
+  { id: "e4", domain: "emotional", text: "결과물이 폐기되거나 무시받은 후 회복은?" },
+  { id: "d1", domain: "detail", text: "숫자 한 자리 틀려서 처음부터 다시 검토해야 할 때 회복은?" },
+  { id: "d2", domain: "detail", text: "문서 오타, 오류를 종일 잡아낸 후 회복은?" },
+  { id: "d3", domain: "detail", text: "정확성이 100% 요구되는 작업을 매일 반복했을 때 회복은?" },
+  { id: "d4", domain: "detail", text: "아주 작은 차이를 종일 구분해야 하는 일의 다음 날 회복은?" },
+  { id: "u1", domain: "uncertainty", text: "월급이 매달 다르게 들어오는 상황이 몇 달 이어졌을 때 영향은?" },
+  { id: "u2", domain: "uncertainty", text: "오늘 할 일을 스스로 정해야 하는 환경에서 회복은?" },
+  { id: "u3", domain: "uncertainty", text: "실패할 가능성이 높은 일에 1년을 투자할 때 정서적 회복은?" },
+  { id: "u4", domain: "uncertainty", text: "갑작스러운 변화가 자주 생기는 환경에서 회복은?" },
+];
+const PAINFIT_JOBS = [
+  {
+    name: "데이터 분석가",
+    requires: ["cognitive", "detail", "repetitive"],
+    lowDemand: ["social", "physical"],
+    desc: "오래 앉아 숫자와 패턴을 다루는 일",
+    experiment: "공개 데이터셋 하나를 받아 2시간 동안 표를 정리하고, 이상치 5개를 찾아 메모해보세요.",
+  },
+  {
+    name: "회계, 세무사",
+    requires: ["detail", "repetitive"],
+    lowDemand: ["uncertainty", "social"],
+    desc: "정확성과 절차 준수가 핵심인 일",
+    experiment: "가계부를 2시간 동안 분류하고 카드 내역과 영수증의 차이를 찾아보세요.",
+  },
+  {
+    name: "리서처, 연구원",
+    requires: ["cognitive", "uncertainty"],
+    lowDemand: ["social", "physical"],
+    desc: "답이 없는 문제를 오래 붙잡는 일",
+    experiment: "관심 주제의 보고서 3편을 읽고 핵심 가설과 한계를 2시간 안에 정리해보세요.",
+  },
+  {
+    name: "편집자, 교정자",
+    requires: ["cognitive", "detail", "repetitive"],
+    lowDemand: ["social", "uncertainty"],
+    desc: "긴 글을 반복해서 다듬는 일",
+    experiment: "5페이지 글을 2시간 동안 3회 반복 검토하며 표현과 구조를 다듬어보세요.",
+  },
+  {
+    name: "UX 리서처",
+    requires: ["cognitive", "social", "uncertainty"],
+    lowDemand: ["physical", "repetitive"],
+    desc: "사람의 모호한 말을 구조화하는 일",
+    experiment: "주변 사람 2명을 짧게 인터뷰하고, 앱 사용 이유의 공통 패턴을 정리해보세요.",
+  },
+  {
+    name: "개발자, 엔지니어",
+    requires: ["cognitive", "detail", "uncertainty"],
+    lowDemand: ["social", "physical"],
+    desc: "복잡한 시스템을 쌓아 올리는 일",
+    experiment: "간단한 코딩 튜토리얼을 2시간 따라 하며 오류가 났을 때 디버깅 과정을 관찰하세요.",
+  },
+  {
+    name: "콘텐츠 기획, 에디터",
+    requires: ["cognitive", "emotional"],
+    lowDemand: ["repetitive", "physical"],
+    desc: "자료를 모아 새 형태로 빚는 일",
+    experiment: "관심 주제로 짧은 글이나 카드뉴스 초안을 만들고 피드백을 받아 수정해보세요.",
+  },
+  {
+    name: "영업, 세일즈",
+    requires: ["social", "emotional", "uncertainty"],
+    lowDemand: ["repetitive", "detail"],
+    desc: "거절을 매일 받아내는 일",
+    experiment: "낯선 사람 5명에게 정중한 제안 메시지를 보내고, 거절 후 다시 보낼 수 있는지 보세요.",
+  },
+  {
+    name: "상담사, 코치",
+    requires: ["social", "emotional"],
+    lowDemand: ["detail", "physical"],
+    desc: "타인의 감정을 오래 받아내는 일",
+    experiment: "친구 2명의 고민을 각 1시간씩 들어주고 끝난 뒤 감정 에너지와 잔상을 관찰하세요.",
+  },
+  {
+    name: "교사, 강사",
+    requires: ["social", "physical", "repetitive"],
+    lowDemand: ["uncertainty"],
+    desc: "같은 내용을 다른 사람에게 반복 전달하는 일",
+    experiment: "익숙한 주제로 30분 강의안을 만들고 2명에게 각각 설명해보세요.",
+  },
+  {
+    name: "간호사, 의료직",
+    requires: ["physical", "social", "emotional", "detail"],
+    lowDemand: ["uncertainty"],
+    desc: "몸과 감정과 정확성을 동시에 쓰는 일",
+    experiment: "의료 현장 시뮬레이션 영상을 보며 절차를 메모하고 다중 부담의 피로를 관찰하세요.",
+  },
+  {
+    name: "PM, 기획자",
+    requires: ["cognitive", "social", "emotional", "uncertainty"],
+    lowDemand: ["detail"],
+    desc: "모호한 요구를 정리해 사람들을 움직이는 일",
+    experiment: "작은 모임의 일정, 역할, 예산을 정리해 3명에게 공유하고 조율 피로를 확인하세요.",
+  },
+  {
+    name: "디자이너",
+    requires: ["cognitive", "emotional", "detail"],
+    lowDemand: ["repetitive"],
+    desc: "비판을 받아 다시 만드는 일",
+    experiment: "포스터나 로고 시안 3개를 만들고 피드백을 받아 1개를 수정해보세요.",
+  },
+  {
+    name: "창업가, 프리랜서",
+    requires: ["uncertainty", "emotional", "social"],
+    lowDemand: ["repetitive"],
+    desc: "아무도 시키지 않는 일을 스스로 만드는 일",
+    experiment: "내가 1만원에 팔 수 있는 것을 정의하고 실제 한 명에게 제안해보세요.",
+  },
+  {
+    name: "공무원, 행정직",
+    requires: ["repetitive", "detail", "social"],
+    lowDemand: ["uncertainty", "emotional"],
+    desc: "정해진 절차로 민원을 처리하는 일",
+    experiment: "관공서 민원 절차 하나를 매뉴얼처럼 정리하며 양식과 반복이 안정적인지 보세요.",
+  },
+  {
+    name: "물류, 현장관리",
+    requires: ["physical", "repetitive", "social"],
+    lowDemand: ["cognitive"],
+    desc: "몸을 쓰며 흐름을 관리하는 일",
+    experiment: "행사 운영이나 매장 보조 같은 현장 일을 2시간 해보고 다음 날 회복을 확인하세요.",
+  },
+];
 
 let state = loadState();
 let toastMessage = "";
 let toastTimer = null;
 let loadingTimer = null;
+const PAINFIT_STORAGE_KEY = "beanything-painfit-state-v1";
+const createPainFitState = () => ({
+  step: "intro",
+  mode: null,
+  answers: {},
+  currentQ: 0,
+  feedback: { rating: 0, hit: "", miss: "", submitted: false },
+});
+
+function loadPainFitState() {
+  try {
+    const raw = window.localStorage.getItem(PAINFIT_STORAGE_KEY);
+    if (!raw) return createPainFitState();
+    const parsed = JSON.parse(raw);
+    const initial = createPainFitState();
+    return {
+      ...initial,
+      ...parsed,
+      answers: { ...initial.answers, ...(parsed.answers || {}) },
+      feedback: { ...initial.feedback, ...(parsed.feedback || {}) },
+    };
+  } catch (error) {
+    console.error("Failed to load painfit state", error);
+    return createPainFitState();
+  }
+}
+
+function savePainFitState() {
+  try {
+    window.localStorage.setItem(PAINFIT_STORAGE_KEY, JSON.stringify(painFitState));
+  } catch (error) {
+    console.error("Failed to save painfit state", error);
+  }
+}
+
+let painFitState = loadPainFitState();
 
 function persist() {
   state = saveState(state);
@@ -411,6 +610,7 @@ function getTopNavItems(current = state) {
   const items = [
     { type: "view", view: "welcome", label: "홈" },
     { type: "view", view: getResumeDestination(current)?.view || "dream", label: getResumeDestination(current) ? "이어하기" : "시작하기" },
+    { type: "view", view: "painfit", label: "견디는 결" },
     { type: "home-section", sectionId: "home-demo", label: "예시 보기" },
   ];
   const resume = getResumeDestination(current);
@@ -524,6 +724,151 @@ function parseMultiValue(raw) {
     .filter(Boolean);
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function getPainFitNumericAnswer(value) {
+  if (value === undefined || value === null || value === PAINFIT_UNKNOWN_VALUE) return null;
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? numeric : null;
+}
+
+function getPainFitStats(answers = painFitState.answers) {
+  const domainKnownCounts = Object.fromEntries(PAINFIT_DOMAIN_KEYS.map((domain) => [domain, 0]));
+  let answeredCount = 0;
+  let knownCount = 0;
+  let unknownCount = 0;
+
+  PAINFIT_QUESTIONS.forEach((question) => {
+    if (answers[question.id] === undefined) return;
+    answeredCount += 1;
+
+    const numeric = getPainFitNumericAnswer(answers[question.id]);
+    if (numeric === null) {
+      unknownCount += 1;
+      return;
+    }
+
+    knownCount += 1;
+    domainKnownCounts[question.domain] += 1;
+  });
+
+  const coveredDomains = Object.values(domainKnownCounts).filter((count) => count > 0).length;
+  const reliability = Math.round(
+    clamp(((knownCount / PAINFIT_QUESTIONS.length) * 0.72 + (coveredDomains / PAINFIT_DOMAIN_KEYS.length) * 0.28) * 100, 0, 100)
+  );
+  const label = reliability >= 85 ? "높음" : reliability >= 65 ? "보통" : reliability >= 45 ? "낮음" : "매우 낮음";
+  const note =
+    reliability >= 85
+      ? "대부분의 영역에 답변 근거가 있어 결과를 비교적 강하게 참고할 수 있습니다."
+      : reliability >= 65
+        ? "일부 문항은 경험 근거가 부족합니다. 추천은 방향성으로 보고 2시간 실험으로 확인하세요."
+        : reliability >= 45
+          ? "잘 모르겠다는 답이 많아 결과가 가설에 가깝습니다. 직업명보다 검증 실험을 우선하세요."
+          : "아직 판단 근거가 적습니다. 결과는 추천보다 질문 목록에 가깝게 보고, 작은 경험을 만든 뒤 다시 해보는 편이 낫습니다.";
+
+  return {
+    answeredCount,
+    knownCount,
+    unknownCount,
+    coveredDomains,
+    domainKnownCounts,
+    reliability,
+    label,
+    note,
+  };
+}
+
+function getPainFitScores(answers = painFitState.answers) {
+  const buckets = Object.fromEntries(PAINFIT_DOMAIN_KEYS.map((domain) => [domain, { sum: 0, count: 0 }]));
+
+  PAINFIT_QUESTIONS.forEach((question) => {
+    if (answers[question.id] === undefined) return;
+    const numeric = getPainFitNumericAnswer(answers[question.id]);
+    if (numeric === null) return;
+    buckets[question.domain].sum += numeric;
+    buckets[question.domain].count += 1;
+  });
+
+  return Object.fromEntries(
+    PAINFIT_DOMAIN_KEYS.map((domain) => {
+      const bucket = buckets[domain];
+      return [domain, bucket.count ? bucket.sum / bucket.count : PAINFIT_NEUTRAL_SCORE];
+    })
+  );
+}
+
+function getPainFitMatches(scores, answers = painFitState.answers) {
+  if (Object.keys(answers).length < PAINFIT_QUESTIONS.length) return { fit: [], avoid: [] };
+
+  const tolerable = PAINFIT_DOMAIN_KEYS.filter((domain) => scores[domain] < 1.3);
+  const intolerable = PAINFIT_DOMAIN_KEYS.filter((domain) => scores[domain] > 1.8);
+  const scored = PAINFIT_JOBS.map((job) => {
+    const requiredFit = job.requires.filter((domain) => tolerable.includes(domain)).length;
+    const requiredRisk = job.requires.filter((domain) => intolerable.includes(domain)).length;
+    const relief = job.lowDemand.filter((domain) => intolerable.includes(domain)).length;
+    const total = requiredFit * 2 + relief * 1.5 - requiredRisk * 3;
+    const maxScore = job.requires.length * 2 + job.lowDemand.length * 1.5;
+    const minScore = job.requires.length * -3;
+    const matchScore = Math.round(clamp(((total - minScore) / (maxScore - minScore)) * 100, 0, 100));
+
+    return {
+      ...job,
+      requiredFit,
+      requiredRisk,
+      relief,
+      total,
+      matchScore,
+    };
+  });
+
+  return {
+    fit: [...scored].sort((left, right) => right.total - left.total || right.matchScore - left.matchScore).slice(0, 4),
+    avoid: [...scored].sort((left, right) => left.total - right.total || left.matchScore - right.matchScore).slice(0, 3),
+  };
+}
+
+function getPainFitCopy(mode) {
+  if (mode === "transition") {
+    return {
+      badge: "전환기",
+      headline: "전환 가능성이 높은 결",
+      sub: "지금 직무에서 당신을 닳게 한 고통이 적은 일들입니다. 다음 일을 볼 때 이 결의 비중을 먼저 확인하세요.",
+      avoidLabel: "소진을 반복할 가능성이 높은 결",
+      avoidSub: "겉으로는 가능해 보여도 회복 비용이 클 수 있습니다. 다음 직장에서도 같은 패턴을 반복할 위험이 있습니다.",
+    };
+  }
+
+  return {
+    badge: "탐색기",
+    headline: "실험해볼 만한 결",
+    sub: "바로 직업을 고르기보다, 작은 실험부터 시작하세요. 견디는 결을 직접 확인하면 진로가 좁혀집니다.",
+    avoidLabel: "첫 경험으로는 위험한 결",
+    avoidSub: "첫 시도가 너무 무거우면 진로 자체에 대한 인상이 나빠질 수 있습니다. 회복 자원이 있을 때만 시도하세요.",
+  };
+}
+
+function getPainFitDomainLabel(domain) {
+  return PAINFIT_DOMAINS[domain]?.label || domain;
+}
+
+function renderPainFitDomainTags(domains, className = "") {
+  if (!domains.length) return `<span class="painfit-muted">뚜렷한 영역 없음</span>`;
+  return domains
+    .map((domain) => `<span class="painfit-domain-chip ${className}" style="--domain-color: ${PAINFIT_DOMAINS[domain].color};">${getPainFitDomainLabel(domain)}</span>`)
+    .join("");
+}
+
 function hashText(value) {
   return String(value || "")
     .split("")
@@ -631,6 +976,8 @@ function renderChoiceButton({ choice, name, selected, action, variant = "default
 function resetAll() {
   clearState();
   state = createInitialState();
+  painFitState = createPainFitState();
+  savePainFitState();
   persist();
   render();
 }
@@ -1044,6 +1391,10 @@ function renderWelcome() {
           <button class="shortcut-card" data-action="navigate" data-view="${state.recommendations.length ? "recommendations" : "dream"}">
             <strong>${state.recommendations.length ? "추천 다시 보기" : "추천 받기 준비"}</strong>
             <span>${state.recommendations.length ? "후보 5개를 다시 비교합니다." : "앞 단계를 채우면 바로 추천을 볼 수 있어요."}</span>
+          </button>
+          <button class="shortcut-card painfit-shortcut" data-action="navigate" data-view="painfit">
+            <strong>견디는 결 진단</strong>
+            <span>좋아함보다 먼저 오래 버틸 수 있는 업무 마찰을 확인합니다.</span>
           </button>
         </div>
       </div>
@@ -2091,10 +2442,476 @@ function renderSettings() {
   `;
 }
 
+function renderPainFitIntro() {
+  return `
+    <section class="painfit-page painfit-hero">
+      <div class="painfit-hero-copy">
+        <span class="painfit-kicker">Pain-Fit Career Mapping</span>
+        <h2>직업을 맞히기보다,<br />오래 버틸 수 있는 업무 마찰을 봅니다.</h2>
+        <p>
+          좋아하는 일을 찾기 전에 먼저 확인합니다. 어떤 종류의 피로는 자고 일어나면 사라지고,
+          어떤 종류의 피로는 며칠을 가는지 28개 질문으로 그려봅니다.
+        </p>
+        <div class="inline-actions">
+          <button class="painfit-primary-button" type="button" data-action="painfit-step" data-step="mode">진단 시작</button>
+          <button class="painfit-ghost-button" type="button" data-action="navigate" data-view="welcome">홈으로</button>
+        </div>
+      </div>
+      <aside class="painfit-thesis-card">
+        <span>핵심 가설</span>
+        <strong>직업은 특정 과업의 조합이고, 그 과업은 반복되는 고통의 결을 만듭니다.</strong>
+        <p>결과는 정답이 아니라, 2시간짜리 검증 실험으로 확인할 후보입니다.</p>
+      </aside>
+    </section>
+  `;
+}
+
+function renderPainFitMode() {
+  return `
+    <section class="painfit-page painfit-panel">
+      <div class="painfit-section-head">
+        <span class="painfit-kicker">Step 01</span>
+        <h2>지금 당신은 어디쯤에 있습니까?</h2>
+        <p>선택에 따라 결과 해석의 초점이 달라집니다.</p>
+      </div>
+      <div class="painfit-mode-grid">
+        <button class="painfit-mode-card" type="button" data-action="painfit-mode" data-mode="youth">
+          <span>A · 탐색기</span>
+          <strong>아직 정하지 않았다</strong>
+          <p>진로를 처음 탐색하거나, 무엇을 하고 싶은지 잘 모르겠습니다.</p>
+          <em>작은 실험 중심 결과</em>
+        </button>
+        <button class="painfit-mode-card" type="button" data-action="painfit-mode" data-mode="transition">
+          <span>B · 전환기</span>
+          <strong>바꾸고 싶다</strong>
+          <p>지금 일이 맞지 않는 것 같고, 다음 방향을 찾고 있습니다.</p>
+          <em>소진 원인과 전환 방향</em>
+        </button>
+      </div>
+      <div class="painfit-bottom-actions">
+        <button class="painfit-ghost-button" type="button" data-action="painfit-step" data-step="intro">처음으로</button>
+      </div>
+    </section>
+  `;
+}
+
+function renderPainFitQuiz() {
+  const question = PAINFIT_QUESTIONS[painFitState.currentQ] || PAINFIT_QUESTIONS[0];
+  const currentAnswer = painFitState.answers[question.id];
+  const progress = ((painFitState.currentQ + 1) / PAINFIT_QUESTIONS.length) * 100;
+
+  return `
+    <section class="painfit-page painfit-panel painfit-quiz">
+      <div class="painfit-progress-head">
+        <span>${String(painFitState.currentQ + 1).padStart(2, "0")} / ${PAINFIT_QUESTIONS.length}</span>
+        <strong>${PAINFIT_DOMAINS[question.domain].label}</strong>
+      </div>
+      <div class="painfit-progress-track" aria-hidden="true">
+        <span style="width: ${progress}%"></span>
+      </div>
+      <div class="painfit-question-card">
+        <span class="painfit-kicker">Q${painFitState.currentQ + 1}</span>
+        <h2>${question.text}</h2>
+        <div class="painfit-option-list">
+          ${PAINFIT_OPTIONS.map(
+            (option, index) => `
+              <button
+                class="painfit-option-button ${String(currentAnswer) === String(option.value) ? "is-selected" : ""}"
+                type="button"
+                data-action="painfit-answer"
+                data-question-id="${question.id}"
+                data-value="${option.value}"
+              >
+                <span>${String.fromCharCode(65 + index)}</span>
+                <span class="painfit-option-copy">
+                  <strong>${option.label}</strong>
+                  ${option.detail ? `<small>${option.detail}</small>` : ""}
+                </span>
+              </button>
+            `
+          ).join("")}
+        </div>
+      </div>
+      <div class="painfit-bottom-actions">
+        <button class="painfit-ghost-button" type="button" data-action="painfit-prev" ${painFitState.currentQ === 0 ? "disabled" : ""}>이전</button>
+        <button class="painfit-ghost-button" type="button" data-action="painfit-step" data-step="intro">처음으로</button>
+      </div>
+    </section>
+  `;
+}
+
+function renderPainFitRadar(scores) {
+  const center = 200;
+  const radius = 128;
+  const points = PAINFIT_DOMAIN_KEYS.map((domain, index) => {
+    const angle = (Math.PI * 2 * index) / PAINFIT_DOMAIN_KEYS.length - Math.PI / 2;
+    const distance = radius * (0.2 + (scores[domain] / 3) * 0.8);
+    return {
+      domain,
+      x: center + Math.cos(angle) * distance,
+      y: center + Math.sin(angle) * distance,
+      labelX: center + Math.cos(angle) * (radius + 34),
+      labelY: center + Math.sin(angle) * (radius + 34),
+      gridX: center + Math.cos(angle) * radius,
+      gridY: center + Math.sin(angle) * radius,
+    };
+  });
+  const grid = [0.35, 0.68, 1]
+    .map((scale) => {
+      const polygon = points
+        .map((point) => `${center + (point.gridX - center) * scale},${center + (point.gridY - center) * scale}`)
+        .join(" ");
+      return `<polygon points="${polygon}" fill="none" stroke="rgba(28,24,22,0.13)" stroke-width="1" />`;
+    })
+    .join("");
+
+  return `
+    <svg class="painfit-radar" viewBox="0 0 400 400" role="img" aria-label="고통 영역 프로파일">
+      ${grid}
+      ${points
+        .map((point) => `<line x1="${center}" y1="${center}" x2="${point.gridX}" y2="${point.gridY}" stroke="rgba(28,24,22,0.13)" stroke-width="1" />`)
+        .join("")}
+      <polygon points="${points.map((point) => `${point.x},${point.y}`).join(" ")}" fill="rgba(139,58,47,0.15)" stroke="#8b3a2f" stroke-width="2" />
+      ${points
+        .map((point) => `<circle cx="${point.x}" cy="${point.y}" r="4.5" fill="${PAINFIT_DOMAINS[point.domain].color}" />`)
+        .join("")}
+      ${points
+        .map((point) => `<text x="${point.labelX}" y="${point.labelY}" text-anchor="middle" dominant-baseline="middle">${PAINFIT_DOMAINS[point.domain].label}</text>`)
+        .join("")}
+    </svg>
+  `;
+}
+
+function renderPainFitJobCard(job, index, scores, stats) {
+  const fitReasons = job.requires.filter((domain) => scores[domain] < 1.3);
+  const riskAreas = job.requires.filter((domain) => scores[domain] > 1.8);
+  const reliefAreas = job.lowDemand.filter((domain) => scores[domain] > 1.8);
+  const scoreLabel = stats.reliability < 65 ? `가설 적합도 ${job.matchScore}점` : `적합도 ${job.matchScore}점`;
+
+  return `
+    <article class="painfit-job-card">
+      <div class="painfit-job-head">
+        <div>
+          <span>#${String(index + 1).padStart(2, "0")} · ${scoreLabel}</span>
+          <h3>${job.name}</h3>
+          <p>${job.desc}</p>
+        </div>
+        <div class="painfit-match-meter" style="--match: ${job.matchScore}%"><span></span></div>
+      </div>
+      <div class="painfit-job-grid">
+        <div>
+          <strong>맞는 이유</strong>
+          <p>
+            ${
+              fitReasons.length
+                ? `${fitReasons.map(getPainFitDomainLabel).join(", ")} 영역의 회복 비용이 낮습니다. 이 일이 요구하는 핵심 마찰과 현재 패턴이 잘 겹칩니다.`
+                : "강한 가산 신호는 약하지만, 큰 충돌 영역이 적어 실험 후보로 남았습니다."
+            }
+          </p>
+          ${reliefAreas.length ? `<p>또 이 일은 ${reliefAreas.map(getPainFitDomainLabel).join(", ")} 부담을 상대적으로 적게 요구합니다.</p>` : ""}
+        </div>
+        <div>
+          <strong>주의할 점</strong>
+          <p>
+            ${
+              riskAreas.length
+                ? `${riskAreas.map(getPainFitDomainLabel).join(", ")} 영역의 회복이 느립니다. 이 비중이 큰 환경이면 장기 소진 위험이 있습니다.`
+                : "현재 답변 기준으로 큰 충돌 신호는 적습니다. 다만 실제 팀, 고객, 마감 강도에 따라 달라질 수 있습니다."
+            }
+          </p>
+        </div>
+        <div>
+          <strong>2시간 검증 실험</strong>
+          <p>${job.experiment} 끝난 뒤 다시 해볼 만한지, 다음 날 잔상이 남는지 기록하세요.</p>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderPainFitAvoidCard(job, index, scores) {
+  const conflicts = job.requires.filter((domain) => scores[domain] > 1.8);
+  return `
+    <article class="painfit-avoid-card">
+      <span>#${index + 1}</span>
+      <h3>${job.name}</h3>
+      <p>${job.desc}</p>
+      <div class="painfit-chip-row">
+        ${renderPainFitDomainTags(conflicts, "risk")}
+      </div>
+    </article>
+  `;
+}
+
+function renderPainFitFeedback() {
+  const feedback = painFitState.feedback;
+  if (feedback.submitted) {
+    return `
+      <div class="painfit-feedback-done">
+        <strong>피드백을 남겼습니다.</strong>
+        <p>다음 버전에서 추천 설명과 직업 데이터를 다듬는 데 사용하겠습니다.</p>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="painfit-rating-row" aria-label="정확도">
+      ${[1, 2, 3, 4, 5]
+        .map(
+          (value) => `
+            <button
+              type="button"
+              class="painfit-star-button ${feedback.rating >= value ? "is-selected" : ""}"
+              data-action="painfit-rating"
+              data-rating="${value}"
+              aria-label="${value}점"
+            >★</button>
+          `
+        )
+        .join("")}
+    </div>
+    <div class="painfit-feedback-grid">
+      <label>
+        <span>가장 와닿은 문장</span>
+        <textarea data-painfit-feedback="hit" placeholder="예: 회복이 느린 영역이 정확하다">${escapeHtml(feedback.hit)}</textarea>
+      </label>
+      <label>
+        <span>이상하거나 틀렸다고 느낀 부분</span>
+        <textarea data-painfit-feedback="miss" placeholder="예: 추천된 직업 중 X는 안 맞을 것 같다">${escapeHtml(feedback.miss)}</textarea>
+      </label>
+    </div>
+    <button class="painfit-primary-button" type="button" data-action="painfit-submit-feedback" ${feedback.rating ? "" : "disabled"}>피드백 보내기</button>
+  `;
+}
+
+function renderPainFitResults() {
+  const scores = getPainFitScores();
+  const stats = getPainFitStats();
+  const matches = getPainFitMatches(scores);
+  const sortedDomains = Object.entries(scores).sort((left, right) => left[1] - right[1]);
+  const knownSortedDomains = sortedDomains.filter(([domain]) => stats.domainKnownCounts[domain] > 0);
+  const summaryDomains = knownSortedDomains.length ? knownSortedDomains : sortedDomains;
+  const tolerable = summaryDomains.slice(0, 3);
+  const intolerable = summaryDomains.slice(-2).reverse();
+  const copy = getPainFitCopy(painFitState.mode);
+  const formatDomainList = (domains) =>
+    domains.length && stats.knownCount
+      ? domains.map(([domain]) => PAINFIT_DOMAINS[domain].label).join(" · ")
+      : "아직 판단 어려움";
+
+  return `
+    <section class="painfit-page painfit-results">
+      <div class="painfit-result-hero">
+        <span class="painfit-kicker">결과 리포트 · ${copy.badge}</span>
+        <h2>당신이 견디는<br />고통의 결</h2>
+        <p>
+          ${painFitState.mode === "transition"
+            ? "지금까지 닳았던 이유를 보여드립니다. 다음 일을 고를 때 같은 패턴을 반복하지 않는 데 초점을 맞춥니다."
+            : "아직 직업을 확정할 필요는 없습니다. 먼저 어떤 결의 일이 회복 사이클과 맞는지 확인하세요."}
+        </p>
+      </div>
+
+      <section class="painfit-figure-grid">
+        <div class="painfit-panel flat">
+          <span class="painfit-kicker">Figure 01</span>
+          <h3>고통 영역 프로파일</h3>
+          <p>안쪽일수록 잘 견디고, 바깥쪽일수록 회복이 느립니다.</p>
+          <div class="painfit-score-list">
+            ${sortedDomains
+              .map(
+                ([domain, value]) => `
+                  <div class="painfit-score-row ${stats.domainKnownCounts[domain] ? "" : "is-estimated"}">
+                    <span>${PAINFIT_DOMAINS[domain].label}${stats.domainKnownCounts[domain] ? "" : "<em>근거 부족</em>"}</span>
+                    <div><i style="width: ${(value / 3) * 100}%; background: ${PAINFIT_DOMAINS[domain].color};"></i></div>
+                    <strong>${stats.domainKnownCounts[domain] ? value.toFixed(1) : "추정"}</strong>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        </div>
+        <div class="painfit-radar-card">
+          ${renderPainFitRadar(scores)}
+        </div>
+      </section>
+
+      <section class="painfit-summary-grid">
+        <article class="painfit-summary-card strong">
+          <span>잘 견디는 영역</span>
+          <strong>${formatDomainList(tolerable)}</strong>
+          <p>이 결의 일은 당신을 덜 닳게 할 가능성이 큽니다.</p>
+        </article>
+        <article class="painfit-summary-card risk">
+          <span>회복이 느린 영역</span>
+          <strong>${formatDomainList(intolerable)}</strong>
+          <p>이 결의 일은 주업으로 삼기 전 실제 강도를 꼭 확인하세요.</p>
+        </article>
+        <article class="painfit-summary-card reliability ${stats.reliability < 65 ? "low" : ""}">
+          <span>평가 신뢰도</span>
+          <strong>${stats.reliability}점 · ${stats.label}</strong>
+          <p>${stats.note}</p>
+          <div class="painfit-reliability-meter" style="--reliability: ${stats.reliability}%"><i></i></div>
+          <small>근거 답변 ${stats.knownCount}/${PAINFIT_QUESTIONS.length} · 잘 모르겠다 ${stats.unknownCount}개 · 영역 ${stats.coveredDomains}/${PAINFIT_DOMAIN_KEYS.length}</small>
+        </article>
+      </section>
+
+      <section class="painfit-panel">
+        <div class="painfit-section-head">
+          <span class="painfit-kicker">Figure 03</span>
+          <h2>${copy.headline}</h2>
+          <p>${copy.sub}</p>
+        </div>
+        <div class="painfit-job-list">
+          ${matches.fit.map((job, index) => renderPainFitJobCard(job, index, scores, stats)).join("")}
+        </div>
+      </section>
+
+      <section class="painfit-panel warning">
+        <div class="painfit-section-head">
+          <span class="painfit-kicker">Figure 04</span>
+          <h2>${copy.avoidLabel}</h2>
+          <p>${copy.avoidSub}</p>
+        </div>
+        <div class="painfit-avoid-grid">
+          ${matches.avoid.map((job, index) => renderPainFitAvoidCard(job, index, scores)).join("")}
+        </div>
+      </section>
+
+      <section class="painfit-panel">
+        <div class="painfit-section-head">
+          <span class="painfit-kicker">Feedback</span>
+          <h2>이 결과가 당신을 얼마나 잘 설명하나요?</h2>
+          <p>정확도 피드백은 다음 버전의 문항, 직업 데이터, 해설을 다듬는 데 사용합니다.</p>
+        </div>
+        ${renderPainFitFeedback()}
+      </section>
+
+      <section class="painfit-actions-panel">
+        <button class="painfit-ghost-button" type="button" data-action="painfit-reset">다시하기</button>
+        <button class="painfit-primary-button" type="button" data-action="painfit-share-card">결과 카드 저장 PNG</button>
+        <button class="painfit-ghost-button" type="button" data-action="navigate" data-view="welcome">홈으로</button>
+      </section>
+      <p class="painfit-disclaimer">
+        이 진단은 단발성 참고 도구입니다. 같은 사람도 시기, 체력, 환경에 따라 답이 달라집니다.
+        직업명은 결론이 아니라 카드 안의 2시간 검증 실험으로 확인할 후보입니다.
+      </p>
+    </section>
+  `;
+}
+
+function renderPainFit() {
+  if (painFitState.step === "mode") return renderPainFitMode();
+  if (painFitState.step === "quiz") return renderPainFitQuiz();
+  if (painFitState.step === "result") return renderPainFitResults();
+  return renderPainFitIntro();
+}
+
+function downloadCanvas(canvas, filename) {
+  const link = document.createElement("a");
+  link.download = filename;
+
+  if (canvas.toBlob) {
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+    return;
+  }
+
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+}
+
+function sharePainFitCard() {
+  const scores = getPainFitScores();
+  const stats = getPainFitStats();
+  const matches = getPainFitMatches(scores);
+  if (!matches.fit.length) {
+    setToast("진단을 완료한 뒤 저장할 수 있어요.");
+    return;
+  }
+
+  const sortedDomains = Object.entries(scores).sort((left, right) => left[1] - right[1]);
+  const tolerableText = sortedDomains.slice(0, 3).map(([domain]) => PAINFIT_DOMAINS[domain].label).join(" · ");
+  const slowText = sortedDomains.slice(-2).reverse().map(([domain]) => PAINFIT_DOMAINS[domain].label).join(" · ");
+  const canvas = document.createElement("canvas");
+  canvas.width = 1080;
+  canvas.height = 1350;
+  const ctx = canvas.getContext("2d");
+
+  ctx.fillStyle = "#f4efe6";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  for (let index = 0; index < 2600; index += 1) {
+    ctx.fillStyle = `rgba(28,24,22,${Math.random() * 0.035})`;
+    ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1, 1);
+  }
+
+  ctx.fillStyle = "#1c1816";
+  ctx.font = "700 26px Apple SD Gothic Neo, sans-serif";
+  ctx.fillText("BE ANYTHING · PAIN-FIT REPORT", 80, 100);
+  ctx.globalAlpha = 0.45;
+  ctx.fillText("2026", 910, 100);
+  ctx.globalAlpha = 1;
+  ctx.strokeStyle = "#1c1816";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(80, 132);
+  ctx.lineTo(1000, 132);
+  ctx.stroke();
+
+  ctx.font = "800 82px Apple SD Gothic Neo, sans-serif";
+  ctx.fillText("내가 견디는", 80, 265);
+  ctx.fillText("고통의 결", 80, 365);
+
+  ctx.globalAlpha = 0.55;
+  ctx.font = "700 24px Apple SD Gothic Neo, sans-serif";
+  ctx.fillText("잘 견디는 영역", 80, 500);
+  ctx.globalAlpha = 1;
+  ctx.font = "800 58px Apple SD Gothic Neo, sans-serif";
+  ctx.fillText(tolerableText, 80, 575);
+
+  ctx.globalAlpha = 0.55;
+  ctx.font = "700 24px Apple SD Gothic Neo, sans-serif";
+  ctx.fillText("회복이 느린 영역", 80, 700);
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = "#8b3a2f";
+  ctx.font = "800 58px Apple SD Gothic Neo, sans-serif";
+  ctx.fillText(slowText, 80, 775);
+
+  ctx.fillStyle = "#1c1816";
+  ctx.globalAlpha = 0.55;
+  ctx.font = "700 24px Apple SD Gothic Neo, sans-serif";
+  ctx.fillText(`평가 신뢰도 ${stats.reliability}점 · ${stats.label}`, 80, 885);
+  ctx.globalAlpha = 1;
+  ctx.font = "500 26px Apple SD Gothic Neo, sans-serif";
+  ctx.fillText(`근거 답변 ${stats.knownCount}/28 · 잘 모르겠다 ${stats.unknownCount}개`, 80, 930);
+
+  ctx.globalAlpha = 0.55;
+  ctx.font = "700 24px Apple SD Gothic Neo, sans-serif";
+  ctx.fillText("실험해볼 만한 일", 80, 1010);
+  ctx.globalAlpha = 1;
+  ctx.font = "700 46px Apple SD Gothic Neo, sans-serif";
+  matches.fit.slice(0, 3).forEach((job, index) => {
+    ctx.fillText(`${index + 1}. ${job.name}`, 80, 1085 + index * 62);
+  });
+
+  ctx.globalAlpha = 0.45;
+  ctx.font = "500 22px Apple SD Gothic Neo, sans-serif";
+  ctx.fillText("직업명은 결론이 아니라 2시간 검증 실험으로 확인할 후보입니다.", 80, 1268);
+  ctx.globalAlpha = 1;
+
+  downloadCanvas(canvas, "painfit-result.png");
+}
+
 function renderMain() {
   switch (state.currentView) {
     case "welcome":
       return renderWelcome();
+    case "painfit":
+      return renderPainFit();
     case "dream":
       return renderDream();
     case "profile":
@@ -2231,6 +3048,84 @@ app.addEventListener("click", (event) => {
 
   if (action === "home-section") {
     scrollToHomeSection(target.dataset.section);
+  }
+
+  if (action === "painfit-step") {
+    painFitState = { ...painFitState, step: target.dataset.step || "intro" };
+    savePainFitState();
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  if (action === "painfit-mode") {
+    painFitState = {
+      ...painFitState,
+      mode: target.dataset.mode || "youth",
+      step: "quiz",
+      currentQ: 0,
+    };
+    savePainFitState();
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  if (action === "painfit-answer") {
+    const questionId = target.dataset.questionId;
+    const value = target.dataset.value === PAINFIT_UNKNOWN_VALUE ? PAINFIT_UNKNOWN_VALUE : Number(target.dataset.value);
+    const isLast = painFitState.currentQ >= PAINFIT_QUESTIONS.length - 1;
+    painFitState = {
+      ...painFitState,
+      answers: { ...painFitState.answers, [questionId]: value },
+      currentQ: isLast ? painFitState.currentQ : painFitState.currentQ + 1,
+      step: isLast ? "result" : "quiz",
+    };
+    savePainFitState();
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  if (action === "painfit-prev") {
+    painFitState = {
+      ...painFitState,
+      currentQ: Math.max(0, painFitState.currentQ - 1),
+      step: "quiz",
+    };
+    savePainFitState();
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  if (action === "painfit-reset") {
+    painFitState = createPainFitState();
+    savePainFitState();
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  if (action === "painfit-rating") {
+    painFitState = {
+      ...painFitState,
+      feedback: { ...painFitState.feedback, rating: Number(target.dataset.rating) },
+    };
+    savePainFitState();
+    render();
+  }
+
+  if (action === "painfit-submit-feedback") {
+    if (!painFitState.feedback.rating) {
+      setToast("정확도 점수를 먼저 골라주세요.");
+      return;
+    }
+    painFitState = {
+      ...painFitState,
+      feedback: { ...painFitState.feedback, submitted: true },
+    };
+    savePainFitState();
+    render();
+  }
+
+  if (action === "painfit-share-card") {
+    sharePainFitCard();
   }
 
   if (action === "set-form-value") {
@@ -2396,6 +3291,22 @@ app.addEventListener("click", (event) => {
     resetAll();
     setToast("처음 상태로 돌아갔어요.");
   }
+});
+
+app.addEventListener("input", (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLTextAreaElement)) return;
+  const feedbackField = target.dataset.painfitFeedback;
+  if (!feedbackField) return;
+
+  painFitState = {
+    ...painFitState,
+    feedback: {
+      ...painFitState.feedback,
+      [feedbackField]: target.value,
+    },
+  };
+  savePainFitState();
 });
 
 app.addEventListener("submit", (event) => {

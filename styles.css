@@ -557,7 +557,7 @@ button:focus-visible {
 }
 
 .shortcut-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .shortcut-card {
@@ -1783,6 +1783,601 @@ button:focus-visible {
   background: var(--surface-soft);
 }
 
+.painfit-page {
+  --pain-bg: #f4efe6;
+  --pain-paper: #fbf8f2;
+  --pain-ink: #1c1816;
+  --pain-muted: rgba(28, 24, 22, 0.64);
+  --pain-line: rgba(28, 24, 22, 0.15);
+  --pain-accent: #8b3a2f;
+  color: var(--pain-ink);
+}
+
+.painfit-hero,
+.painfit-panel,
+.painfit-result-hero,
+.painfit-radar-card,
+.painfit-summary-card,
+.painfit-actions-panel {
+  border: 1px solid var(--pain-line);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(139, 58, 47, 0.06), transparent 30%),
+    radial-gradient(circle at 84% 72%, rgba(44, 95, 93, 0.07), transparent 28%),
+    var(--pain-paper);
+  box-shadow: 0 16px 40px rgba(28, 24, 22, 0.08);
+}
+
+.painfit-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: end;
+  min-height: 620px;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  overflow: hidden;
+}
+
+.painfit-hero-copy h2,
+.painfit-result-hero h2 {
+  max-width: 850px;
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 6.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.075em;
+}
+
+.painfit-hero-copy p,
+.painfit-result-hero p,
+.painfit-section-head p,
+.painfit-panel > p,
+.painfit-thesis-card p,
+.painfit-question-card p,
+.painfit-job-card p,
+.painfit-summary-card p,
+.painfit-avoid-card p,
+.painfit-disclaimer {
+  color: var(--pain-muted);
+  line-height: 1.7;
+}
+
+.painfit-hero-copy p,
+.painfit-result-hero p {
+  max-width: 680px;
+  margin: 1.25rem 0 1.6rem;
+  font-size: 1.08rem;
+}
+
+.painfit-kicker {
+  display: inline-flex;
+  margin-bottom: 0.8rem;
+  color: rgba(28, 24, 22, 0.48);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.painfit-thesis-card {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.35rem;
+  border-left: 2px solid var(--pain-ink);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.painfit-thesis-card span,
+.painfit-job-head span,
+.painfit-summary-card span,
+.painfit-avoid-card > span,
+.painfit-feedback-grid span {
+  color: rgba(28, 24, 22, 0.5);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.painfit-thesis-card strong {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.28;
+  letter-spacing: -0.04em;
+}
+
+.painfit-primary-button,
+.painfit-ghost-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.85rem 1.15rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--pain-ink);
+  font-weight: 800;
+  transition: transform 160ms ease, background-color 160ms ease, color 160ms ease, opacity 160ms ease;
+}
+
+.painfit-primary-button {
+  background: var(--pain-ink);
+  color: var(--pain-bg);
+}
+
+.painfit-ghost-button {
+  background: transparent;
+  color: var(--pain-ink);
+}
+
+.painfit-primary-button:hover,
+.painfit-ghost-button:hover,
+.painfit-mode-card:hover,
+.painfit-option-button:hover,
+.painfit-job-card:hover {
+  transform: translateY(-1px);
+}
+
+.painfit-primary-button:disabled,
+.painfit-ghost-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.painfit-panel,
+.painfit-result-hero,
+.painfit-actions-panel {
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1.2rem, 3vw, 2rem);
+}
+
+.painfit-section-head h2,
+.painfit-panel h3 {
+  margin: 0;
+  font-size: clamp(1.65rem, 3vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.05em;
+}
+
+.painfit-section-head p,
+.painfit-panel h3 + p {
+  max-width: 720px;
+  margin: 0.45rem 0 0;
+}
+
+.painfit-mode-grid,
+.painfit-figure-grid,
+.painfit-summary-grid,
+.painfit-job-grid,
+.painfit-avoid-grid,
+.painfit-feedback-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.painfit-mode-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.painfit-mode-card,
+.painfit-option-button,
+.painfit-job-card,
+.painfit-avoid-card {
+  border: 1px solid var(--pain-line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.42);
+  text-align: left;
+}
+
+.painfit-mode-card {
+  display: grid;
+  gap: 0.55rem;
+  padding: 1.4rem;
+}
+
+.painfit-mode-card strong {
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+  letter-spacing: -0.04em;
+}
+
+.painfit-mode-card em {
+  color: var(--pain-accent);
+  font-style: normal;
+  font-weight: 800;
+}
+
+.painfit-progress-head,
+.painfit-bottom-actions,
+.painfit-job-head,
+.painfit-actions-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.painfit-progress-head {
+  color: rgba(28, 24, 22, 0.52);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.painfit-progress-track {
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(28, 24, 22, 0.12);
+}
+
+.painfit-progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--pain-ink);
+  transition: width 220ms ease;
+}
+
+.painfit-question-card h2 {
+  max-width: 880px;
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  line-height: 1.2;
+  letter-spacing: -0.06em;
+  word-break: keep-all;
+}
+
+.painfit-option-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.painfit-option-button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 68px;
+  padding: 1rem;
+}
+
+.painfit-option-button > span:first-child {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgba(28, 24, 22, 0.08);
+  color: rgba(28, 24, 22, 0.55);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.painfit-option-copy {
+  display: block;
+  min-width: 0;
+}
+
+.painfit-option-copy strong {
+  display: block;
+}
+
+.painfit-option-button small {
+  display: block;
+  margin-top: 0.18rem;
+  color: rgba(28, 24, 22, 0.5);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.painfit-option-button.is-selected {
+  border-color: var(--pain-ink);
+  background: var(--pain-ink);
+  color: var(--pain-bg);
+}
+
+.painfit-option-button.is-selected > span:first-child {
+  background: rgba(244, 239, 230, 0.16);
+  color: var(--pain-bg);
+}
+
+.painfit-option-button.is-selected small {
+  color: rgba(244, 239, 230, 0.68);
+}
+
+.painfit-results {
+  display: grid;
+  gap: 1rem;
+}
+
+.painfit-result-hero {
+  min-height: 420px;
+  align-content: end;
+}
+
+.painfit-figure-grid {
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+  align-items: stretch;
+}
+
+.painfit-panel.flat {
+  box-shadow: none;
+}
+
+.painfit-radar-card {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.painfit-radar {
+  width: min(100%, 440px);
+}
+
+.painfit-radar text {
+  fill: var(--pain-ink);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.painfit-score-list {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.2rem;
+}
+
+.painfit-score-row {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) 42px;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.94rem;
+}
+
+.painfit-score-row em {
+  display: block;
+  margin-top: 0.12rem;
+  color: rgba(28, 24, 22, 0.42);
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.painfit-score-row.is-estimated {
+  opacity: 0.68;
+}
+
+.painfit-score-row div {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(28, 24, 22, 0.1);
+}
+
+.painfit-score-row i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.painfit-score-row strong {
+  color: rgba(28, 24, 22, 0.58);
+  font-size: 0.82rem;
+  text-align: right;
+}
+
+.painfit-summary-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.painfit-summary-card {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.4rem;
+}
+
+.painfit-summary-card strong {
+  font-size: clamp(1.5rem, 3vw, 2.35rem);
+  line-height: 1.2;
+  letter-spacing: -0.05em;
+}
+
+.painfit-summary-card.strong {
+  background: var(--pain-ink);
+  color: var(--pain-bg);
+}
+
+.painfit-summary-card.strong p,
+.painfit-summary-card.strong span {
+  color: rgba(244, 239, 230, 0.72);
+}
+
+.painfit-summary-card.risk strong {
+  color: var(--pain-accent);
+}
+
+.painfit-summary-card.reliability {
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.painfit-summary-card.reliability strong {
+  color: #2c5f5d;
+}
+
+.painfit-summary-card.reliability.low strong {
+  color: var(--pain-accent);
+}
+
+.painfit-summary-card small {
+  color: rgba(28, 24, 22, 0.5);
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.painfit-reliability-meter {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(28, 24, 22, 0.1);
+}
+
+.painfit-reliability-meter i {
+  display: block;
+  width: var(--reliability);
+  height: 100%;
+  border-radius: inherit;
+  background: #2c5f5d;
+}
+
+.painfit-summary-card.reliability.low .painfit-reliability-meter i {
+  background: var(--pain-accent);
+}
+
+.painfit-job-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.painfit-job-card {
+  display: grid;
+  gap: 1.15rem;
+  padding: 1.2rem;
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.painfit-job-card:hover {
+  border-color: var(--pain-ink);
+}
+
+.painfit-job-head h3,
+.painfit-avoid-card h3 {
+  margin: 0.25rem 0 0.25rem;
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  letter-spacing: -0.04em;
+}
+
+.painfit-match-meter {
+  flex: 0 0 90px;
+  height: 90px;
+  border-radius: 999px;
+  background: conic-gradient(var(--pain-accent) var(--match), rgba(28, 24, 22, 0.1) 0);
+  padding: 8px;
+}
+
+.painfit-match-meter span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--pain-paper);
+}
+
+.painfit-job-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-top: 1rem;
+  border-top: 1px solid var(--pain-line);
+}
+
+.painfit-job-grid strong {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.painfit-panel.warning {
+  background:
+    linear-gradient(90deg, rgba(139, 58, 47, 0.08), rgba(255, 255, 255, 0)),
+    var(--pain-paper);
+}
+
+.painfit-avoid-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.painfit-avoid-card {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  padding: 1.1rem;
+}
+
+.painfit-chip-row {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.painfit-domain-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(139, 58, 47, 0.1);
+  background: color-mix(in srgb, var(--domain-color) 13%, transparent);
+  color: var(--domain-color);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.painfit-muted {
+  color: rgba(28, 24, 22, 0.44);
+  font-size: 0.86rem;
+}
+
+.painfit-rating-row {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.painfit-star-button {
+  color: rgba(28, 24, 22, 0.22);
+  font-size: 2rem;
+  transition: transform 140ms ease, color 140ms ease;
+}
+
+.painfit-star-button:hover {
+  transform: scale(1.08);
+}
+
+.painfit-star-button.is-selected {
+  color: var(--pain-ink);
+}
+
+.painfit-feedback-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.painfit-feedback-grid label {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.painfit-feedback-grid textarea {
+  min-height: 104px;
+  border-color: var(--pain-line);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.painfit-feedback-done {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.25rem;
+  border-radius: 10px;
+  background: rgba(44, 95, 93, 0.1);
+}
+
+.painfit-actions-panel {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.painfit-disclaimer {
+  margin: 0;
+  padding: 0 0.35rem;
+  font-size: 0.88rem;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -1810,6 +2405,8 @@ button:focus-visible {
 @media (max-width: 980px) {
   .welcome-shell,
   .hero-scene,
+  .painfit-hero,
+  .painfit-figure-grid,
   .recommendation-layout,
   .dashboard-grid,
   .home-grid {
@@ -1822,12 +2419,15 @@ button:focus-visible {
 
   .panel-header,
   .candidate-head,
+  .painfit-job-head,
   .detail-top {
     flex-direction: column;
   }
 
   .promise-list,
-  .path-preview-grid {
+  .path-preview-grid,
+  .painfit-job-grid,
+  .painfit-avoid-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1844,6 +2444,11 @@ button:focus-visible {
     max-width: 420px;
     justify-self: start;
   }
+
+  .painfit-hero,
+  .painfit-result-hero {
+    min-height: auto;
+  }
 }
 
 @media (max-width: 760px) {
@@ -1859,6 +2464,9 @@ button:focus-visible {
   }
 
   .field-grid,
+  .painfit-mode-grid,
+  .painfit-summary-grid,
+  .painfit-feedback-grid,
   .choice-grid-two,
   .choice-grid-three,
   .choice-grid-four,
@@ -1920,6 +2528,22 @@ button:focus-visible {
   .candidate-visual {
     min-height: 158px;
   }
+
+  .painfit-hero-copy h2,
+  .painfit-result-hero h2 {
+    font-size: clamp(2.5rem, 13vw, 4.4rem);
+  }
+
+  .painfit-bottom-actions,
+  .painfit-actions-panel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .painfit-match-meter {
+    width: 76px;
+    height: 76px;
+  }
 }
 
 @media (max-width: 560px) {
@@ -1936,6 +2560,9 @@ button:focus-visible {
   .inspiration-grid,
   .demo-grid,
   .hero-summary-grid,
+  .painfit-mode-grid,
+  .painfit-summary-grid,
+  .painfit-feedback-grid,
   .stage-tab-row,
   .rating-grid,
   .shortcut-grid {
