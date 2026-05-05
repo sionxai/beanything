@@ -1,4 +1,4 @@
-const CACHE_NAME = "beanything-v20260505b";
+const CACHE_NAME = "beanything-v20260505j";
 const APP_ASSETS = [
   "./",
   "./index.html",
@@ -11,6 +11,13 @@ const APP_ASSETS = [
   "./assets/generated/scene-creative.png",
   "./assets/generated/scene-expert.png",
   "./assets/generated/scene-business.png",
+  "./assets/generated/painfit/painfit-physical-banner-v1.png",
+  "./assets/generated/painfit/painfit-cognitive-banner-v1.png",
+  "./assets/generated/painfit/painfit-repetitive-banner-v1.png",
+  "./assets/generated/painfit/painfit-social-banner-v1.png",
+  "./assets/generated/painfit/painfit-emotional-banner-v1.png",
+  "./assets/generated/painfit/painfit-detail-banner-v1.png",
+  "./assets/generated/painfit/painfit-uncertainty-banner-v1.png",
   "./assets/inspiration-studio.svg",
   "./assets/inspiration-classroom.svg",
   "./assets/inspiration-storefront.svg",

@@ -210,6 +210,14 @@ button:focus-visible {
   padding: 0.7rem 1rem;
 }
 
+.header-qr-button {
+  min-height: 40px;
+  padding: 0.7rem 1rem;
+  background: #17211d;
+  color: #fffefb;
+  border-color: rgba(23, 33, 29, 0.16);
+}
+
 .top-nav {
   position: sticky;
   top: 0.75rem;
@@ -1169,6 +1177,123 @@ button:focus-visible {
   z-index: 20;
 }
 
+.qr-modal-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+.qr-modal-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 20, 17, 0.62);
+  backdrop-filter: blur(12px);
+}
+
+.qr-modal {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1rem;
+  width: min(100%, 560px);
+  padding: clamp(1rem, 3vw, 1.4rem);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(240, 200, 90, 0.18), transparent 34%),
+    linear-gradient(180deg, #fffefb, #f4f8f2);
+  box-shadow: 0 28px 80px rgba(9, 20, 17, 0.28);
+}
+
+.qr-modal-copy {
+  display: grid;
+  gap: 0.6rem;
+  text-align: center;
+}
+
+.qr-modal-copy h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  letter-spacing: -0.04em;
+}
+
+.qr-modal-copy p {
+  margin: 0 auto;
+  max-width: 25rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.qr-code-frame {
+  width: min(100%, 390px);
+  margin: 0.25rem auto;
+  padding: clamp(0.8rem, 3vw, 1rem);
+  border-radius: 26px;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+}
+
+.qr-code-frame img,
+.qr-code-frame svg {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.qr-code-svg {
+  display: block;
+}
+
+.qr-fallback {
+  display: grid;
+  place-items: center;
+  min-height: 260px;
+  padding: 1rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.qr-url-box {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.85rem 1rem;
+  border-radius: 18px;
+  background: rgba(223, 242, 238, 0.72);
+  border: 1px solid rgba(31, 111, 99, 0.14);
+}
+
+.qr-url-box span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.qr-url-box strong {
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+.qr-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+}
+
+.qr-modal-actions .primary-button,
+.qr-modal-actions .secondary-button,
+.qr-modal-actions .ghost-button {
+  min-height: 46px;
+  padding: 0.75rem 1rem;
+}
+
+.qr-close-button {
+  background: transparent;
+}
+
 .hero-scene {
   position: relative;
   isolation: isolate;
@@ -1789,7 +1914,9 @@ button:focus-visible {
   --pain-ink: #1c1816;
   --pain-muted: rgba(28, 24, 22, 0.64);
   --pain-line: rgba(28, 24, 22, 0.15);
-  --pain-accent: #8b3a2f;
+  --pain-accent: var(--accent);
+  --pain-accent-strong: var(--accent-strong);
+  --pain-warn: #8b3a2f;
   color: var(--pain-ink);
 }
 
@@ -1798,12 +1925,13 @@ button:focus-visible {
 .painfit-result-hero,
 .painfit-radar-card,
 .painfit-summary-card,
+.painfit-reliability-card,
 .painfit-actions-panel {
   border: 1px solid var(--pain-line);
   border-radius: 12px;
   background:
-    radial-gradient(circle at 18% 18%, rgba(139, 58, 47, 0.06), transparent 30%),
-    radial-gradient(circle at 84% 72%, rgba(44, 95, 93, 0.07), transparent 28%),
+    radial-gradient(circle at 18% 18%, rgba(31, 111, 99, 0.07), transparent 30%),
+    radial-gradient(circle at 84% 72%, rgba(139, 58, 47, 0.055), transparent 28%),
     var(--pain-paper);
   box-shadow: 0 16px 40px rgba(28, 24, 22, 0.08);
 }
@@ -1898,8 +2026,9 @@ button:focus-visible {
 }
 
 .painfit-primary-button {
-  background: var(--pain-ink);
+  background: var(--pain-accent-strong);
   color: var(--pain-bg);
+  border-color: var(--pain-accent-strong);
 }
 
 .painfit-ghost-button {
@@ -2013,17 +2142,386 @@ button:focus-visible {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--pain-ink);
+  background: var(--pain-accent);
   transition: width 220ms ease;
 }
 
-.painfit-question-card h2 {
+.painfit-progress-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-top: -0.25rem;
+  color: rgba(28, 24, 22, 0.54);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.painfit-progress-toggle {
+  min-height: 34px;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid rgba(28, 24, 22, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.48);
+  color: var(--pain-accent-strong);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.painfit-progress-toggle::after {
+  content: "⌄";
+  display: inline-block;
+  margin-left: 0.35rem;
+  transition: transform 160ms ease;
+}
+
+.painfit-progress-toggle[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+.painfit-domain-progress {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.painfit-domain-step {
+  display: grid;
+  gap: 0.45rem;
+  min-height: 76px;
+  padding: 0.65rem;
+  border: 1px solid rgba(28, 24, 22, 0.11);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.painfit-domain-step.active {
+  border-color: color-mix(in srgb, var(--domain-color) 36%, rgba(28, 24, 22, 0.12));
+  background: color-mix(in srgb, var(--domain-color) 9%, rgba(255, 255, 255, 0.52));
+}
+
+.painfit-domain-step div {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.painfit-domain-step strong {
+  font-size: 0.88rem;
+  line-height: 1.15;
+}
+
+.painfit-domain-step span {
+  color: rgba(28, 24, 22, 0.5);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.painfit-domain-step i {
+  display: block;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(28, 24, 22, 0.1);
+}
+
+.painfit-domain-step b {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--domain-color);
+}
+
+.painfit-question-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(0.8rem, 2vw, 1.1rem);
+  align-items: start;
+}
+
+.painfit-question-copy h2 {
   max-width: 880px;
   margin: 0 0 1.5rem;
   font-size: clamp(1.8rem, 4vw, 3.2rem);
   line-height: 1.2;
   letter-spacing: -0.06em;
   word-break: keep-all;
+}
+
+.painfit-question-visual {
+  --comic-color: var(--pain-accent);
+  --comic-soft: rgba(31, 111, 99, 0.11);
+  display: grid;
+  gap: 0.7rem;
+}
+
+.painfit-question-visual.domain-physical {
+  --comic-color: #8b3a2f;
+  --comic-soft: rgba(139, 58, 47, 0.12);
+}
+
+.painfit-question-visual.domain-cognitive {
+  --comic-color: #2c5f5d;
+  --comic-soft: rgba(44, 95, 93, 0.12);
+}
+
+.painfit-question-visual.domain-repetitive {
+  --comic-color: #6b4423;
+  --comic-soft: rgba(107, 68, 35, 0.12);
+}
+
+.painfit-question-visual.domain-social {
+  --comic-color: #a8541e;
+  --comic-soft: rgba(168, 84, 30, 0.12);
+}
+
+.painfit-question-visual.domain-emotional {
+  --comic-color: #5c3a6e;
+  --comic-soft: rgba(92, 58, 110, 0.12);
+}
+
+.painfit-question-visual.domain-detail {
+  --comic-color: #3d5a3d;
+  --comic-soft: rgba(61, 90, 61, 0.12);
+}
+
+.painfit-question-visual.domain-uncertainty {
+  --comic-color: #7a4e2d;
+  --comic-soft: rgba(122, 78, 45, 0.12);
+}
+
+.painfit-comic-frame {
+  position: relative;
+  min-height: 0;
+  min-height: 92px;
+  aspect-ratio: 9 / 1;
+  overflow: hidden;
+  border: 1px solid rgba(28, 24, 22, 0.13);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 18% 18%, color-mix(in srgb, var(--comic-color) 18%, transparent), transparent 28%),
+    radial-gradient(circle at 78% 28%, rgba(255, 255, 255, 0.72), transparent 22%),
+    linear-gradient(160deg, var(--comic-soft), rgba(255, 255, 255, 0.52));
+}
+
+.painfit-comic-frame.generated-image {
+  background: var(--pain-paper);
+}
+
+.painfit-comic-frame.generated-image img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.painfit-comic-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(28, 24, 22, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(28, 24, 22, 0.035) 1px, transparent 1px);
+  background-size: 18px 18px;
+  opacity: 0.5;
+}
+
+.painfit-comic-frame.generated-image::before {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(28, 24, 22, 0.03));
+  opacity: 1;
+}
+
+.painfit-comic-tag,
+.painfit-comic-bubble,
+.painfit-comic-prop {
+  position: absolute;
+  z-index: 2;
+  border: 1px solid rgba(28, 24, 22, 0.14);
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: 0 8px 18px rgba(28, 24, 22, 0.07);
+}
+
+.painfit-comic-tag {
+  top: 0.75rem;
+  left: 0.75rem;
+  min-height: 28px;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  color: var(--comic-color);
+  font-size: 0.74rem;
+  font-weight: 900;
+}
+
+.painfit-comic-bubble {
+  top: 3rem;
+  right: 0.75rem;
+  max-width: 58%;
+  padding: 0.55rem 0.7rem;
+  border-radius: 14px 14px 4px 14px;
+  color: rgba(28, 24, 22, 0.72);
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.painfit-comic-prop {
+  right: 0.85rem;
+  bottom: 1.1rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  color: var(--comic-color);
+  font-size: 0.84rem;
+  font-weight: 900;
+  transform: rotate(-2deg);
+}
+
+.painfit-comic-person {
+  position: absolute;
+  left: 20%;
+  bottom: 2.7rem;
+  z-index: 2;
+  width: 72px;
+  height: 110px;
+}
+
+.painfit-comic-person i {
+  position: absolute;
+  display: block;
+  background: var(--comic-color);
+}
+
+.painfit-comic-person .head {
+  top: 0;
+  left: 20px;
+  width: 34px;
+  height: 34px;
+  border: 3px solid rgba(28, 24, 22, 0.76);
+  border-radius: 999px;
+  background: #f7d7b8;
+}
+
+.painfit-comic-person .head::before,
+.painfit-comic-person .head::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(28, 24, 22, 0.72);
+}
+
+.painfit-comic-person .head::before {
+  left: 9px;
+}
+
+.painfit-comic-person .head::after {
+  right: 9px;
+}
+
+.painfit-comic-person .body {
+  top: 38px;
+  left: 18px;
+  width: 38px;
+  height: 46px;
+  border: 3px solid rgba(28, 24, 22, 0.78);
+  border-radius: 14px 14px 10px 10px;
+  background: color-mix(in srgb, var(--comic-color) 24%, #fff);
+}
+
+.painfit-comic-person .arm {
+  top: 47px;
+  width: 34px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(28, 24, 22, 0.72);
+}
+
+.painfit-comic-person .arm.one {
+  left: -1px;
+  transform: rotate(-24deg);
+}
+
+.painfit-comic-person .arm.two {
+  right: -5px;
+  transform: rotate(28deg);
+}
+
+.painfit-comic-person .leg {
+  top: 82px;
+  width: 8px;
+  height: 30px;
+  border-radius: 999px;
+  background: rgba(28, 24, 22, 0.72);
+}
+
+.painfit-comic-person .leg.one {
+  left: 24px;
+  transform: rotate(8deg);
+}
+
+.painfit-comic-person .leg.two {
+  left: 42px;
+  transform: rotate(-7deg);
+}
+
+.painfit-comic-ground {
+  position: absolute;
+  left: 11%;
+  right: 11%;
+  bottom: 2rem;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(28, 24, 22, 0.14);
+}
+
+.painfit-comic-orbit {
+  position: absolute;
+  z-index: 1;
+  border: 2px dashed color-mix(in srgb, var(--comic-color) 34%, transparent);
+  border-radius: 999px;
+}
+
+.painfit-comic-orbit.one {
+  width: 82px;
+  height: 82px;
+  left: 1rem;
+  top: 4.5rem;
+}
+
+.painfit-comic-orbit.two {
+  width: 128px;
+  height: 128px;
+  right: -2.8rem;
+  bottom: -2.2rem;
+}
+
+.painfit-visual-caption {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.painfit-visual-caption strong {
+  flex: 0 0 auto;
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.painfit-visual-caption span {
+  min-width: 0;
+  color: var(--pain-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .painfit-option-list {
@@ -2071,6 +2569,26 @@ button:focus-visible {
 }
 
 .painfit-option-button.is-selected {
+  border-color: var(--pain-ink);
+  background: var(--pain-ink);
+  color: var(--pain-bg);
+}
+
+.painfit-option-button.is-unknown {
+  margin-top: 0.55rem;
+  border-style: dashed;
+  background: rgba(28, 24, 22, 0.035);
+}
+
+.painfit-option-button.is-unknown:not(.is-selected) {
+  color: rgba(28, 24, 22, 0.72);
+}
+
+.painfit-option-button.is-unknown > span:first-child {
+  background: rgba(28, 24, 22, 0.06);
+}
+
+.painfit-option-button.is-unknown.is-selected {
   border-color: var(--pain-ink);
   background: var(--pain-ink);
   color: var(--pain-bg);
@@ -2167,7 +2685,7 @@ button:focus-visible {
 }
 
 .painfit-summary-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .painfit-summary-card {
@@ -2193,19 +2711,7 @@ button:focus-visible {
 }
 
 .painfit-summary-card.risk strong {
-  color: var(--pain-accent);
-}
-
-.painfit-summary-card.reliability {
-  background: rgba(255, 255, 255, 0.52);
-}
-
-.painfit-summary-card.reliability strong {
-  color: #2c5f5d;
-}
-
-.painfit-summary-card.reliability.low strong {
-  color: var(--pain-accent);
+  color: var(--pain-warn);
 }
 
 .painfit-summary-card small {
@@ -2215,23 +2721,72 @@ button:focus-visible {
   line-height: 1.45;
 }
 
-.painfit-reliability-meter {
-  height: 7px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(28, 24, 22, 0.1);
+.painfit-reliability-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: clamp(1.2rem, 3vw, 1.7rem);
+  background:
+    linear-gradient(90deg, rgba(31, 111, 99, 0.11), rgba(255, 255, 255, 0.35)),
+    var(--pain-paper);
 }
 
-.painfit-reliability-meter i {
-  display: block;
-  width: var(--reliability);
+.painfit-reliability-card h3 {
+  margin: 0 0 0.4rem;
+  color: var(--pain-accent-strong);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.painfit-reliability-card.low h3 {
+  color: var(--pain-warn);
+}
+
+.painfit-reliability-card p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--pain-muted);
+  line-height: 1.65;
+}
+
+.painfit-reliability-side {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex: 0 0 auto;
+}
+
+.painfit-reliability-side small {
+  color: rgba(28, 24, 22, 0.55);
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.painfit-reliability-ring {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 999px;
+  background: conic-gradient(var(--pain-accent) var(--reliability), rgba(28, 24, 22, 0.1) 0);
+  padding: 7px;
+}
+
+.painfit-reliability-card.low .painfit-reliability-ring {
+  background: conic-gradient(var(--pain-warn) var(--reliability), rgba(28, 24, 22, 0.1) 0);
+}
+
+.painfit-reliability-ring strong {
+  display: grid;
+  place-items: center;
+  width: 100%;
   height: 100%;
   border-radius: inherit;
-  background: #2c5f5d;
-}
-
-.painfit-summary-card.reliability.low .painfit-reliability-meter i {
-  background: var(--pain-accent);
+  background: var(--pain-paper);
+  font-size: 1.45rem;
 }
 
 .painfit-job-list {
@@ -2277,6 +2832,34 @@ button:focus-visible {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   padding-top: 1rem;
   border-top: 1px solid var(--pain-line);
+}
+
+.painfit-job-badges {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.painfit-job-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(28, 24, 22, 0.06);
+  color: rgba(28, 24, 22, 0.62);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.painfit-job-badge.good {
+  background: rgba(31, 111, 99, 0.1);
+  color: var(--pain-accent-strong);
+}
+
+.painfit-job-badge.warn {
+  background: rgba(139, 58, 47, 0.1);
+  color: var(--pain-warn);
 }
 
 .painfit-job-grid strong {
@@ -2407,6 +2990,7 @@ button:focus-visible {
   .hero-scene,
   .painfit-hero,
   .painfit-figure-grid,
+  .painfit-domain-progress,
   .recommendation-layout,
   .dashboard-grid,
   .home-grid {
@@ -2420,12 +3004,14 @@ button:focus-visible {
   .panel-header,
   .candidate-head,
   .painfit-job-head,
+  .painfit-reliability-card,
   .detail-top {
     flex-direction: column;
   }
 
   .promise-list,
   .path-preview-grid,
+  .painfit-question-layout,
   .painfit-job-grid,
   .painfit-avoid-grid {
     grid-template-columns: 1fr;
@@ -2449,6 +3035,10 @@ button:focus-visible {
   .painfit-result-hero {
     min-height: auto;
   }
+
+  .painfit-reliability-card {
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 760px) {
@@ -2463,10 +3053,16 @@ button:focus-visible {
     flex-direction: column;
   }
 
+  .header-qr-button,
+  .header-shortcut {
+    width: 100%;
+  }
+
   .field-grid,
   .painfit-mode-grid,
   .painfit-summary-grid,
   .painfit-feedback-grid,
+  .painfit-domain-progress,
   .choice-grid-two,
   .choice-grid-three,
   .choice-grid-four,
@@ -2529,12 +3125,82 @@ button:focus-visible {
     min-height: 158px;
   }
 
+  .painfit-domain-progress {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .painfit-question-layout {
+    gap: 0.85rem;
+  }
+
+  .painfit-question-visual {
+    grid-template-columns: 1fr;
+  }
+
+  .painfit-comic-frame {
+    min-height: 64px;
+    aspect-ratio: auto;
+    border-radius: 12px;
+  }
+
+  .painfit-comic-tag {
+    top: 0.45rem;
+    left: 0.45rem;
+    min-height: 22px;
+    padding: 0.16rem 0.42rem;
+    font-size: 0.64rem;
+  }
+
+  .painfit-comic-bubble {
+    display: none;
+  }
+
+  .painfit-comic-prop {
+    right: 0.45rem;
+    bottom: 0.55rem;
+    max-width: 60px;
+    padding: 0.32rem 0.42rem;
+    font-size: 0.64rem;
+    line-height: 1.1;
+  }
+
+  .painfit-comic-person {
+    left: 21%;
+    bottom: 1.15rem;
+    transform: scale(0.55);
+    transform-origin: left bottom;
+  }
+
+  .painfit-comic-ground {
+    bottom: 1rem;
+  }
+
+  .painfit-comic-orbit.one {
+    width: 44px;
+    height: 44px;
+    left: 0.4rem;
+    top: 2.4rem;
+  }
+
+  .painfit-comic-orbit.two {
+    display: none;
+  }
+
+  .painfit-visual-caption strong {
+    font-size: 0.92rem;
+  }
+
+  .painfit-visual-caption span {
+    display: none;
+  }
+
   .painfit-hero-copy h2,
   .painfit-result-hero h2 {
     font-size: clamp(2.5rem, 13vw, 4.4rem);
   }
 
   .painfit-bottom-actions,
+  .painfit-progress-toggle-row,
   .painfit-actions-panel {
     align-items: stretch;
     flex-direction: column;
@@ -2563,6 +3229,7 @@ button:focus-visible {
   .painfit-mode-grid,
   .painfit-summary-grid,
   .painfit-feedback-grid,
+  .painfit-domain-progress,
   .stage-tab-row,
   .rating-grid,
   .shortcut-grid {
@@ -2586,7 +3253,8 @@ button:focus-visible {
   }
 
   .hero-card,
-  .panel {
+  .panel,
+  .painfit-panel {
     padding: 1rem;
   }
 
@@ -2598,6 +3266,20 @@ button:focus-visible {
   }
 
   .hero-floating-panel {
+    width: 100%;
+  }
+
+  .qr-modal {
+    max-height: calc(100vh - 1.5rem);
+    overflow: auto;
+    border-radius: 22px;
+  }
+
+  .qr-code-frame {
+    width: min(100%, 300px);
+  }
+
+  .qr-modal-actions > * {
     width: 100%;
   }
 

@@ -306,6 +306,54 @@ const PAINFIT_QUESTIONS = [
   { id: "u3", domain: "uncertainty", text: "실패할 가능성이 높은 일에 1년을 투자할 때 정서적 회복은?" },
   { id: "u4", domain: "uncertainty", text: "갑작스러운 변화가 자주 생기는 환경에서 회복은?" },
 ];
+const PAINFIT_DOMAIN_SCENES = {
+  physical: { title: "몸이 먼저 말하는 장면", label: "몸의 배터리" },
+  cognitive: { title: "머리가 오래 붙잡는 장면", label: "생각의 미로" },
+  repetitive: { title: "같은 리듬이 쌓이는 장면", label: "반복 루프" },
+  social: { title: "사람과 부딪히는 장면", label: "대화 온도" },
+  emotional: { title: "마음에 잔상이 남는 장면", label: "마음 잔상" },
+  detail: { title: "작은 차이를 계속 보는 장면", label: "확대경 모드" },
+  uncertainty: { title: "안개 속에서 정하는 장면", label: "미정의 길" },
+};
+const PAINFIT_DOMAIN_IMAGES = {
+  physical: "./assets/generated/painfit/painfit-physical-banner-v1.png",
+  cognitive: "./assets/generated/painfit/painfit-cognitive-banner-v1.png",
+  repetitive: "./assets/generated/painfit/painfit-repetitive-banner-v1.png",
+  social: "./assets/generated/painfit/painfit-social-banner-v1.png",
+  emotional: "./assets/generated/painfit/painfit-emotional-banner-v1.png",
+  detail: "./assets/generated/painfit/painfit-detail-banner-v1.png",
+  uncertainty: "./assets/generated/painfit/painfit-uncertainty-banner-v1.png",
+};
+const PAINFIT_QUESTION_SCENES = {
+  p1: { title: "발바닥이 퇴근하지 못한 주", caption: "오래 서 있는 일을 다음 주 몸이 어떻게 기억하는지 봅니다.", prop: "8h standing", bubble: "다음 주도 가능?" },
+  p2: { title: "의자가 나를 붙잡는 날", caption: "앉아 있는 피로가 편안함인지 답답함인지 확인합니다.", prop: "desk day", bubble: "몸이 굳네" },
+  p3: { title: "밤샘 요정의 청구서", caption: "수면 리듬이 흔들렸을 때 회복 비용을 봅니다.", prop: "late night", bubble: "내일 괜찮나" },
+  p4: { title: "소음, 냄새, 온도의 삼중주", caption: "환경 자극이 몸에 남는 시간을 확인합니다.", prop: "noise zone", bubble: "자극 과다" },
+  c1: { title: "자료 더미 속 탐정", caption: "조사 후에도 다음 날 다시 파고들 수 있는지 봅니다.", prop: "research", bubble: "단서 찾기" },
+  c2: { title: "20페이지 산책로", caption: "긴 글을 끝까지 따라가는 인지 체력을 봅니다.", prop: "20 pages", bubble: "끝까지 읽자" },
+  c3: { title: "정답 없는 퍼즐", caption: "모호한 문제를 오래 붙잡는 힘을 확인합니다.", prop: "no answer", bubble: "답이 어디에" },
+  c4: { title: "복잡한 관계도 정글", caption: "구조를 이해하는 일이 에너지인지 소모인지 봅니다.", prop: "system map", bubble: "선이 너무 많아" },
+  r1: { title: "매일 같은 버튼", caption: "반복이 안정감인지 지루함인지 확인합니다.", prop: "repeat x30", bubble: "또 이거네" },
+  r2: { title: "체크리스트 행진", caption: "정해진 절차가 편한지 답답한지 봅니다.", prop: "checklist", bubble: "순서대로" },
+  r3: { title: "문서 5회전 회전목마", caption: "같은 문서를 여러 번 보는 피로를 확인합니다.", prop: "review x5", bubble: "한 번 더?" },
+  r4: { title: "예측 가능한 하루", caption: "루틴이 마음을 안정시키는지 꺼지게 하는지 봅니다.", prop: "routine", bubble: "오늘도 같은 길" },
+  s1: { title: "낯선 사람 20명 미팅", caption: "사람을 많이 만난 뒤 다음 날 회복을 봅니다.", prop: "20 people", bubble: "안녕하세요 x20" },
+  s2: { title: "거절 도장 5개", caption: "거절을 받은 뒤 다시 시도할 수 있는지 확인합니다.", prop: "5 no", bubble: "다음 메시지?" },
+  s3: { title: "화난 고객의 먹구름", caption: "강한 감정을 마주한 뒤 잔상을 봅니다.", prop: "angry cloud", bubble: "진정해볼게요" },
+  s4: { title: "설득의 줄다리기", caption: "낯선 사람을 설득하는 일이 며칠 이어질 때를 봅니다.", prop: "persuade", bubble: "한 번만 더" },
+  e1: { title: "공개 피드백 무대", caption: "비판을 받은 뒤 다시 만들 수 있는지 확인합니다.", prop: "public review", bubble: "다시 고칠까" },
+  e2: { title: "마감 알람 합창단", caption: "압박이 이어질 때 마음의 회복 속도를 봅니다.", prop: "deadline", bubble: "마감이 온다" },
+  e3: { title: "책임 배낭 메고 걷기", caption: "혼자 책임지는 상황의 무게를 확인합니다.", prop: "big bag", bubble: "내가 맡았다" },
+  e4: { title: "폐기함 앞의 결과물", caption: "무시되거나 폐기된 뒤 다시 움직일 수 있는지 봅니다.", prop: "discarded", bubble: "다음 시안?" },
+  d1: { title: "숫자 한 자리 범인 찾기", caption: "작은 숫자 오류가 만든 재검토 피로를 봅니다.", prop: "digit error", bubble: "범인은 0?" },
+  d2: { title: "오타 사냥꾼의 하루", caption: "작은 오류를 계속 찾는 일이 맞는지 확인합니다.", prop: "typo hunt", bubble: "여기 오타" },
+  d3: { title: "100% 정확성 모드", caption: "완벽한 정확성이 매일 요구될 때를 봅니다.", prop: "100%", bubble: "틀리면 안 돼" },
+  d4: { title: "아주 작은 차이 확대경", caption: "미세한 차이를 오래 구분하는 부담을 봅니다.", prop: "tiny diff", bubble: "거의 같은데" },
+  u1: { title: "월급 그래프 롤러코스터", caption: "수입 변동이 마음에 남는 정도를 봅니다.", prop: "income wave", bubble: "이번 달은?" },
+  u2: { title: "오늘 할 일 빈 종이", caption: "스스로 정하는 자유가 에너지인지 부담인지 봅니다.", prop: "blank plan", bubble: "뭘 하지" },
+  u3: { title: "1년짜리 실험 티켓", caption: "실패 가능성이 큰 길에 투자하는 부담을 봅니다.", prop: "1 year bet", bubble: "해볼까" },
+  u4: { title: "갑작스러운 방향 전환", caption: "변화가 잦은 환경에서 회복 속도를 확인합니다.", prop: "sudden turn", bubble: "또 바뀜" },
+};
 const PAINFIT_JOBS = [
   {
     name: "데이터 분석가",
@@ -424,6 +472,7 @@ const PAINFIT_JOBS = [
 let state = loadState();
 let toastMessage = "";
 let toastTimer = null;
+let accessQrOpen = false;
 let loadingTimer = null;
 const PAINFIT_STORAGE_KEY = "beanything-painfit-state-v1";
 const createPainFitState = () => ({
@@ -431,6 +480,7 @@ const createPainFitState = () => ({
   mode: null,
   answers: {},
   currentQ: 0,
+  showDomainProgress: false,
   feedback: { rating: 0, hit: "", miss: "", submitted: false },
 });
 
@@ -490,6 +540,366 @@ function formatSaveLabel(iso) {
   if (!iso) return "임시 저장 준비";
   const date = new Date(iso);
   return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")} 저장됨`;
+}
+
+function getAccessUrl() {
+  const url = new URL("./", window.location.href);
+  url.search = "";
+  url.hash = "";
+  return url.toString();
+}
+
+function isLocalPreviewUrl(url) {
+  const parsed = new URL(url);
+  return parsed.hostname === "127.0.0.1" || parsed.hostname === "localhost" || parsed.hostname === "::1";
+}
+
+const QR_VERSION_CONFIG = [
+  null,
+  { version: 1, dataCodewords: 19, eccCodewords: 7, blocks: 1, align: [] },
+  { version: 2, dataCodewords: 34, eccCodewords: 10, blocks: 1, align: [6, 18] },
+  { version: 3, dataCodewords: 55, eccCodewords: 15, blocks: 1, align: [6, 22] },
+  { version: 4, dataCodewords: 80, eccCodewords: 20, blocks: 1, align: [6, 26] },
+  { version: 5, dataCodewords: 108, eccCodewords: 26, blocks: 1, align: [6, 30] },
+  { version: 6, dataCodewords: 136, eccCodewords: 18, blocks: 2, align: [6, 34] },
+];
+
+function createQrSvg(text) {
+  const bytes = [...new TextEncoder().encode(text)];
+  const config = QR_VERSION_CONFIG.find((item) => item && bytes.length <= item.dataCodewords - 2);
+
+  if (!config) {
+    return `
+      <div class="qr-fallback">
+        <strong>주소가 길어 QR을 만들 수 없어요.</strong>
+        <span>아래 접속 주소를 복사해서 공유해주세요.</span>
+      </div>
+    `;
+  }
+
+  const dataCodewords = buildQrDataCodewords(bytes, config);
+  const finalCodewords = addQrErrorCorrection(dataCodewords, config);
+  const base = buildQrBaseMatrix(config);
+  const candidates = Array.from({ length: 8 }, (_, mask) => {
+    const matrix = cloneQrMatrix(base);
+    placeQrData(matrix, finalCodewords, mask);
+    drawQrFormatBits(matrix, mask);
+    return { mask, matrix, penalty: scoreQrPenalty(matrix.modules) };
+  });
+  const best = candidates.sort((left, right) => left.penalty - right.penalty)[0];
+  return renderQrSvg(best.matrix.modules);
+}
+
+function buildQrDataCodewords(bytes, config) {
+  const bits = [];
+  const pushBits = (value, length) => {
+    for (let index = length - 1; index >= 0; index -= 1) {
+      bits.push((value >>> index) & 1);
+    }
+  };
+
+  pushBits(0b0100, 4);
+  pushBits(bytes.length, 8);
+  bytes.forEach((byte) => pushBits(byte, 8));
+
+  const capacityBits = config.dataCodewords * 8;
+  const terminator = Math.min(4, capacityBits - bits.length);
+  for (let index = 0; index < terminator; index += 1) bits.push(0);
+  while (bits.length % 8) bits.push(0);
+
+  const codewords = [];
+  for (let index = 0; index < bits.length; index += 8) {
+    codewords.push(Number.parseInt(bits.slice(index, index + 8).join(""), 2));
+  }
+
+  const pads = [0xec, 0x11];
+  let padIndex = 0;
+  while (codewords.length < config.dataCodewords) {
+    codewords.push(pads[padIndex % 2]);
+    padIndex += 1;
+  }
+
+  return codewords;
+}
+
+function addQrErrorCorrection(dataCodewords, config) {
+  const blockSize = config.dataCodewords / config.blocks;
+  const generator = getQrGeneratorPolynomial(config.eccCodewords);
+  const blocks = Array.from({ length: config.blocks }, (_, blockIndex) => {
+    const data = dataCodewords.slice(blockIndex * blockSize, (blockIndex + 1) * blockSize);
+    return { data, ecc: calculateQrEcc(data, generator, config.eccCodewords) };
+  });
+  const result = [];
+
+  for (let index = 0; index < blockSize; index += 1) {
+    blocks.forEach((block) => result.push(block.data[index]));
+  }
+  for (let index = 0; index < config.eccCodewords; index += 1) {
+    blocks.forEach((block) => result.push(block.ecc[index]));
+  }
+
+  return result;
+}
+
+function getQrGeneratorPolynomial(degree) {
+  let poly = [1];
+  for (let index = 0; index < degree; index += 1) {
+    const next = new Array(poly.length + 1).fill(0);
+    poly.forEach((coefficient, position) => {
+      next[position] ^= qrGfMultiply(coefficient, 1);
+      next[position + 1] ^= qrGfMultiply(coefficient, qrGfPow(index));
+    });
+    poly = next;
+  }
+  return poly;
+}
+
+function calculateQrEcc(data, generator, eccLength) {
+  const result = new Array(eccLength).fill(0);
+  data.forEach((byte) => {
+    const factor = byte ^ result.shift();
+    result.push(0);
+    for (let index = 0; index < eccLength; index += 1) {
+      result[index] ^= qrGfMultiply(generator[index + 1], factor);
+    }
+  });
+  return result;
+}
+
+function qrGfPow(power) {
+  let value = 1;
+  for (let index = 0; index < power; index += 1) {
+    value <<= 1;
+    if (value & 0x100) value ^= 0x11d;
+  }
+  return value;
+}
+
+function qrGfMultiply(left, right) {
+  let result = 0;
+  let a = left;
+  let b = right;
+  while (b > 0) {
+    if (b & 1) result ^= a;
+    a <<= 1;
+    if (a & 0x100) a ^= 0x11d;
+    b >>>= 1;
+  }
+  return result;
+}
+
+function buildQrBaseMatrix(config) {
+  const size = config.version * 4 + 17;
+  const matrix = {
+    modules: Array.from({ length: size }, () => new Array(size).fill(false)),
+    reserved: Array.from({ length: size }, () => new Array(size).fill(false)),
+  };
+
+  drawQrFinder(matrix, 0, 0);
+  drawQrFinder(matrix, size - 7, 0);
+  drawQrFinder(matrix, 0, size - 7);
+  drawQrTiming(matrix);
+  drawQrAlignmentPatterns(matrix, config.align);
+  reserveQrFormatAreas(matrix);
+  setQrModule(matrix, 8, config.version * 4 + 9, true, true);
+
+  return matrix;
+}
+
+function cloneQrMatrix(matrix) {
+  return {
+    modules: matrix.modules.map((row) => [...row]),
+    reserved: matrix.reserved.map((row) => [...row]),
+  };
+}
+
+function setQrModule(matrix, x, y, value, reserve = true) {
+  if (y < 0 || y >= matrix.modules.length || x < 0 || x >= matrix.modules.length) return;
+  matrix.modules[y][x] = Boolean(value);
+  if (reserve) matrix.reserved[y][x] = true;
+}
+
+function drawQrFinder(matrix, x, y) {
+  for (let dy = -1; dy <= 7; dy += 1) {
+    for (let dx = -1; dx <= 7; dx += 1) {
+      const xx = x + dx;
+      const yy = y + dy;
+      if (xx < 0 || yy < 0 || xx >= matrix.modules.length || yy >= matrix.modules.length) continue;
+      const isFinder =
+        dx >= 0 &&
+        dx <= 6 &&
+        dy >= 0 &&
+        dy <= 6 &&
+        (dx === 0 || dx === 6 || dy === 0 || dy === 6 || (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4));
+      setQrModule(matrix, xx, yy, isFinder, true);
+    }
+  }
+}
+
+function drawQrTiming(matrix) {
+  const size = matrix.modules.length;
+  for (let index = 8; index < size - 8; index += 1) {
+    const value = index % 2 === 0;
+    setQrModule(matrix, index, 6, value, true);
+    setQrModule(matrix, 6, index, value, true);
+  }
+}
+
+function drawQrAlignmentPatterns(matrix, centers) {
+  if (!centers.length) return;
+  const size = matrix.modules.length;
+  centers.forEach((x) => {
+    centers.forEach((y) => {
+      const overlapsFinder = (x <= 8 && y <= 8) || (x >= size - 9 && y <= 8) || (x <= 8 && y >= size - 9);
+      if (overlapsFinder) return;
+      for (let dy = -2; dy <= 2; dy += 1) {
+        for (let dx = -2; dx <= 2; dx += 1) {
+          const distance = Math.max(Math.abs(dx), Math.abs(dy));
+          setQrModule(matrix, x + dx, y + dy, distance !== 1, true);
+        }
+      }
+    });
+  });
+}
+
+function reserveQrFormatAreas(matrix) {
+  const size = matrix.modules.length;
+  for (let index = 0; index <= 8; index += 1) {
+    if (index !== 6) {
+      matrix.reserved[8][index] = true;
+      matrix.reserved[index][8] = true;
+    }
+  }
+  for (let index = 0; index < 8; index += 1) {
+    matrix.reserved[8][size - 1 - index] = true;
+    matrix.reserved[size - 1 - index][8] = true;
+  }
+}
+
+function placeQrData(matrix, codewords, mask) {
+  const bits = codewords.flatMap((byte) =>
+    Array.from({ length: 8 }, (_, index) => (byte >>> (7 - index)) & 1)
+  );
+  const size = matrix.modules.length;
+  let bitIndex = 0;
+  let upward = true;
+
+  for (let right = size - 1; right >= 1; right -= 2) {
+    if (right === 6) right -= 1;
+    for (let row = 0; row < size; row += 1) {
+      const y = upward ? size - 1 - row : row;
+      for (let column = 0; column < 2; column += 1) {
+        const x = right - column;
+        if (matrix.reserved[y][x]) continue;
+        const raw = bitIndex < bits.length ? Boolean(bits[bitIndex]) : false;
+        const value = raw !== getQrMask(mask, x, y);
+        setQrModule(matrix, x, y, value, false);
+        bitIndex += 1;
+      }
+    }
+    upward = !upward;
+  }
+}
+
+function getQrMask(mask, x, y) {
+  if (mask === 0) return (x + y) % 2 === 0;
+  if (mask === 1) return y % 2 === 0;
+  if (mask === 2) return x % 3 === 0;
+  if (mask === 3) return (x + y) % 3 === 0;
+  if (mask === 4) return (Math.floor(y / 2) + Math.floor(x / 3)) % 2 === 0;
+  if (mask === 5) return ((x * y) % 2) + ((x * y) % 3) === 0;
+  if (mask === 6) return (((x * y) % 2) + ((x * y) % 3)) % 2 === 0;
+  return (((x + y) % 2) + ((x * y) % 3)) % 2 === 0;
+}
+
+function drawQrFormatBits(matrix, mask) {
+  const size = matrix.modules.length;
+  const format = calculateQrFormatBits(mask);
+  const bit = (index) => ((format >>> index) & 1) === 1;
+
+  for (let index = 0; index <= 5; index += 1) setQrModule(matrix, 8, index, bit(index), true);
+  setQrModule(matrix, 8, 7, bit(6), true);
+  setQrModule(matrix, 8, 8, bit(7), true);
+  setQrModule(matrix, 7, 8, bit(8), true);
+  for (let index = 9; index < 15; index += 1) setQrModule(matrix, 14 - index, 8, bit(index), true);
+  for (let index = 0; index < 8; index += 1) setQrModule(matrix, size - 1 - index, 8, bit(index), true);
+  for (let index = 8; index < 15; index += 1) setQrModule(matrix, 8, size - 15 + index, bit(index), true);
+}
+
+function calculateQrFormatBits(mask) {
+  const data = (0b01 << 3) | mask;
+  let value = data << 10;
+  const generator = 0x537;
+  for (let index = 14; index >= 10; index -= 1) {
+    if ((value >>> index) & 1) value ^= generator << (index - 10);
+  }
+  return ((data << 10) | value) ^ 0x5412;
+}
+
+function scoreQrPenalty(modules) {
+  const size = modules.length;
+  let score = 0;
+
+  const scoreRun = (values) => {
+    let runColor = values[0];
+    let runLength = 1;
+    for (let index = 1; index <= values.length; index += 1) {
+      if (values[index] === runColor) {
+        runLength += 1;
+      } else {
+        if (runLength >= 5) score += 3 + (runLength - 5);
+        runColor = values[index];
+        runLength = 1;
+      }
+    }
+  };
+
+  for (let y = 0; y < size; y += 1) scoreRun(modules[y]);
+  for (let x = 0; x < size; x += 1) scoreRun(modules.map((row) => row[x]));
+
+  for (let y = 0; y < size - 1; y += 1) {
+    for (let x = 0; x < size - 1; x += 1) {
+      const color = modules[y][x];
+      if (modules[y][x + 1] === color && modules[y + 1][x] === color && modules[y + 1][x + 1] === color) {
+        score += 3;
+      }
+    }
+  }
+
+  const pattern = "1011101";
+  const penaltyPattern = (values) => {
+    const line = values.map((value) => (value ? "1" : "0")).join("");
+    for (let index = 0; index <= line.length - 11; index += 1) {
+      const before = line.slice(index, index + 11) === `0000${pattern}`;
+      const after = line.slice(index, index + 11) === `${pattern}0000`;
+      if (before || after) score += 40;
+    }
+  };
+  for (let y = 0; y < size; y += 1) penaltyPattern(modules[y]);
+  for (let x = 0; x < size; x += 1) penaltyPattern(modules.map((row) => row[x]));
+
+  const dark = modules.flat().filter(Boolean).length;
+  score += Math.floor(Math.abs(dark * 20 - size * size * 10) / (size * size)) * 10;
+  return score;
+}
+
+function renderQrSvg(modules) {
+  const margin = 4;
+  const size = modules.length;
+  const viewBoxSize = size + margin * 2;
+  const path = modules
+    .flatMap((row, y) =>
+      row.map((dark, x) => (dark ? `M${x + margin} ${y + margin}h1v1H${x + margin}z` : ""))
+    )
+    .filter(Boolean)
+    .join("");
+
+  return `
+    <svg class="qr-code-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${viewBoxSize} ${viewBoxSize}" role="img" aria-label="Be Anything 접속 QR 코드" shape-rendering="crispEdges">
+      <rect width="${viewBoxSize}" height="${viewBoxSize}" fill="#fff" />
+      <path d="${path}" fill="#000" />
+    </svg>
+  `;
 }
 
 function getSetupIndex(view) {
@@ -1281,6 +1691,7 @@ function renderHeader() {
       </button>
       <div class="header-side">
         <span class="save-chip">${formatSaveLabel(state.meta.lastSavedAt)}</span>
+        <button class="secondary-button header-qr-button" type="button" data-action="open-access-qr">접속 QR</button>
         ${resume ? `<button class="secondary-button header-shortcut" data-action="navigate" data-view="${resume.view}">${resume.label}</button>` : ""}
       </div>
     </header>
@@ -1305,6 +1716,45 @@ function renderTopNav() {
         )
         .join("")}
     </nav>
+  `;
+}
+
+function renderAccessQrModal() {
+  if (!accessQrOpen) return "";
+
+  const accessUrl = getAccessUrl();
+  const qrSvg = createQrSvg(accessUrl);
+  const isLocal = isLocalPreviewUrl(accessUrl);
+
+  return `
+    <div class="qr-modal-layer" role="presentation">
+      <button class="qr-modal-scrim" type="button" data-action="close-access-qr" aria-label="접속 QR 닫기"></button>
+      <section class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="access-qr-title">
+        <div class="qr-modal-copy">
+          <span class="eyebrow">바로 접속</span>
+          <h2 id="access-qr-title">휴대폰으로 바로 열기</h2>
+          <p>
+            ${
+              isLocal
+                ? "지금 QR은 로컬 미리보기 주소입니다. 배포 후에는 실제 접속 주소로 자동 표시됩니다."
+                : "카메라로 찍으면 Be Anything 메인 화면으로 바로 이동합니다."
+            }
+          </p>
+        </div>
+        <div class="qr-code-frame">
+          ${qrSvg}
+        </div>
+        <div class="qr-url-box">
+          <span>접속 주소</span>
+          <strong>${escapeHtml(accessUrl)}</strong>
+        </div>
+        <div class="qr-modal-actions">
+          <button class="primary-button" type="button" data-action="copy-access-url">주소 복사</button>
+          <a class="secondary-button" href="${escapeHtml(accessUrl)}" target="_blank" rel="noreferrer">새 창으로 열기</a>
+          <button class="ghost-button qr-close-button" type="button" data-action="close-access-qr">닫기</button>
+        </div>
+      </section>
+    </div>
   `;
 }
 
@@ -1351,6 +1801,7 @@ function renderWelcome() {
         <p>막연한 꿈을 적고, 지금 상황에 맞는 경로를 고른 뒤, 첫 결과물과 첫 수익 시도까지 이어갑니다.</p>
         <div class="inline-actions">
           <button class="primary-button hero-cta" data-action="start-flow">내 경로 만들기</button>
+          <button class="ghost-button hero-ghost" type="button" data-action="open-access-qr">접속 QR 보기</button>
           ${resume ? `<button class="ghost-button hero-ghost" data-action="navigate" data-view="${resume.view}">${resume.cta}</button>` : ""}
         </div>
       </div>
@@ -2495,10 +2946,69 @@ function renderPainFitMode() {
   `;
 }
 
+function renderPainFitDomainProgress(currentDomain) {
+  const progressByDomain = PAINFIT_DOMAIN_KEYS.map((domain) => {
+    const questions = PAINFIT_QUESTIONS.filter((question) => question.domain === domain);
+    const answered = questions.filter((question) => painFitState.answers[question.id] !== undefined);
+    const unknown = answered.filter((question) => painFitState.answers[question.id] === PAINFIT_UNKNOWN_VALUE);
+    return {
+      domain,
+      total: questions.length,
+      answered: answered.length,
+      unknown: unknown.length,
+    };
+  });
+
+  return `
+    <div class="painfit-domain-progress" aria-label="영역별 진행 상황">
+      ${progressByDomain
+        .map(
+          (item) => `
+            <div class="painfit-domain-step ${item.domain === currentDomain ? "active" : ""}" style="--domain-color: ${PAINFIT_DOMAINS[item.domain].color};">
+              <div>
+                <strong>${PAINFIT_DOMAINS[item.domain].label}</strong>
+                <span>${item.answered}/${item.total}${item.unknown ? ` · 보류 ${item.unknown}` : ""}</span>
+              </div>
+              <i><b style="width: ${(item.answered / item.total) * 100}%"></b></i>
+            </div>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function renderPainFitQuestionVisual(question) {
+  const domainScene = PAINFIT_DOMAIN_SCENES[question.domain] || PAINFIT_DOMAIN_SCENES.physical;
+  const questionScene = PAINFIT_QUESTION_SCENES[question.id] || {
+    title: domainScene.title,
+    caption: "이 상황을 상상하며 내 회복 속도를 골라보세요.",
+    prop: domainScene.label,
+    bubble: "내 회복은?",
+  };
+  const imageSrc = PAINFIT_DOMAIN_IMAGES[question.domain] || PAINFIT_DOMAIN_IMAGES.physical;
+
+  return `
+    <aside class="painfit-question-visual domain-${question.domain}" aria-label="${escapeHtml(questionScene.title)} 예시 그림">
+      <div class="painfit-comic-frame generated-image">
+        <img src="${imageSrc}" alt="" loading="lazy" decoding="async" />
+        <span class="painfit-comic-tag">${escapeHtml(domainScene.label)}</span>
+      </div>
+      <div class="painfit-visual-caption">
+        <strong>${escapeHtml(questionScene.title)}</strong>
+        <span>${escapeHtml(questionScene.caption)}</span>
+      </div>
+    </aside>
+  `;
+}
+
 function renderPainFitQuiz() {
   const question = PAINFIT_QUESTIONS[painFitState.currentQ] || PAINFIT_QUESTIONS[0];
   const currentAnswer = painFitState.answers[question.id];
   const progress = ((painFitState.currentQ + 1) / PAINFIT_QUESTIONS.length) * 100;
+  const answeredCount = Object.keys(painFitState.answers).length;
+  const unknownCount = Object.values(painFitState.answers).filter((value) => value === PAINFIT_UNKNOWN_VALUE).length;
+  const showDomainProgress = Boolean(painFitState.showDomainProgress);
 
   return `
     <section class="painfit-page painfit-panel painfit-quiz">
@@ -2509,27 +3019,44 @@ function renderPainFitQuiz() {
       <div class="painfit-progress-track" aria-hidden="true">
         <span style="width: ${progress}%"></span>
       </div>
+      <div class="painfit-progress-toggle-row">
+        <span>전체 ${answeredCount}/${PAINFIT_QUESTIONS.length}${unknownCount ? ` · 잘 모르겠다 ${unknownCount}` : ""}</span>
+        <button
+          class="painfit-progress-toggle"
+          type="button"
+          data-action="painfit-toggle-progress"
+          aria-expanded="${showDomainProgress ? "true" : "false"}"
+        >
+          ${showDomainProgress ? "영역 진행표 숨기기" : "영역 진행표 보기"}
+        </button>
+      </div>
+      ${showDomainProgress ? renderPainFitDomainProgress(question.domain) : ""}
       <div class="painfit-question-card">
-        <span class="painfit-kicker">Q${painFitState.currentQ + 1}</span>
-        <h2>${question.text}</h2>
-        <div class="painfit-option-list">
-          ${PAINFIT_OPTIONS.map(
-            (option, index) => `
-              <button
-                class="painfit-option-button ${String(currentAnswer) === String(option.value) ? "is-selected" : ""}"
-                type="button"
-                data-action="painfit-answer"
-                data-question-id="${question.id}"
-                data-value="${option.value}"
-              >
-                <span>${String.fromCharCode(65 + index)}</span>
-                <span class="painfit-option-copy">
-                  <strong>${option.label}</strong>
-                  ${option.detail ? `<small>${option.detail}</small>` : ""}
-                </span>
-              </button>
-            `
-          ).join("")}
+        <div class="painfit-question-layout">
+          ${renderPainFitQuestionVisual(question)}
+          <div class="painfit-question-copy">
+            <span class="painfit-kicker">Q${painFitState.currentQ + 1}</span>
+            <h2>${question.text}</h2>
+            <div class="painfit-option-list">
+              ${PAINFIT_OPTIONS.map(
+                (option, index) => `
+                  <button
+                    class="painfit-option-button ${option.value === PAINFIT_UNKNOWN_VALUE ? "is-unknown" : ""} ${String(currentAnswer) === String(option.value) ? "is-selected" : ""}"
+                    type="button"
+                    data-action="painfit-answer"
+                    data-question-id="${question.id}"
+                    data-value="${option.value}"
+                  >
+                    <span>${String.fromCharCode(65 + index)}</span>
+                    <span class="painfit-option-copy">
+                      <strong>${option.label}</strong>
+                      ${option.detail ? `<small>${option.detail}</small>` : ""}
+                    </span>
+                  </button>
+                `
+              ).join("")}
+            </div>
+          </div>
         </div>
       </div>
       <div class="painfit-bottom-actions">
@@ -2582,6 +3109,24 @@ function renderPainFitRadar(scores) {
   `;
 }
 
+function renderPainFitReliabilityCard(stats, variant = "") {
+  return `
+    <article class="painfit-reliability-card ${variant} ${stats.reliability < 65 ? "low" : ""}">
+      <div>
+        <span class="painfit-kicker">평가 신뢰도</span>
+        <h3>${stats.reliability}점 · ${stats.label}</h3>
+        <p>${stats.note}</p>
+      </div>
+      <div class="painfit-reliability-side">
+        <div class="painfit-reliability-ring" style="--reliability: ${stats.reliability}%">
+          <strong>${stats.reliability}</strong>
+        </div>
+        <small>근거 답변 ${stats.knownCount}/${PAINFIT_QUESTIONS.length}<br />잘 모르겠다 ${stats.unknownCount}개 · 영역 ${stats.coveredDomains}/${PAINFIT_DOMAIN_KEYS.length}</small>
+      </div>
+    </article>
+  `;
+}
+
 function renderPainFitJobCard(job, index, scores, stats) {
   const fitReasons = job.requires.filter((domain) => scores[domain] < 1.3);
   const riskAreas = job.requires.filter((domain) => scores[domain] > 1.8);
@@ -2597,6 +3142,12 @@ function renderPainFitJobCard(job, index, scores, stats) {
           <p>${job.desc}</p>
         </div>
         <div class="painfit-match-meter" style="--match: ${job.matchScore}%"><span></span></div>
+      </div>
+      <div class="painfit-job-badges">
+        <span class="painfit-job-badge good">맞는 마찰 ${fitReasons.length}개</span>
+        <span class="painfit-job-badge ${riskAreas.length ? "warn" : "good"}">주의 영역 ${riskAreas.length}개</span>
+        <span class="painfit-job-badge">검증 2시간</span>
+        ${stats.reliability < 65 ? `<span class="painfit-job-badge warn">가설 우선</span>` : ""}
       </div>
       <div class="painfit-job-grid">
         <div>
@@ -2702,7 +3253,7 @@ function renderPainFitResults() {
   return `
     <section class="painfit-page painfit-results">
       <div class="painfit-result-hero">
-        <span class="painfit-kicker">결과 리포트 · ${copy.badge}</span>
+        <span class="painfit-kicker">Be Anything Lab · 결과 리포트 · ${copy.badge}</span>
         <h2>당신이 견디는<br />고통의 결</h2>
         <p>
           ${painFitState.mode === "transition"
@@ -2710,6 +3261,8 @@ function renderPainFitResults() {
             : "아직 직업을 확정할 필요는 없습니다. 먼저 어떤 결의 일이 회복 사이클과 맞는지 확인하세요."}
         </p>
       </div>
+
+      ${renderPainFitReliabilityCard(stats, "prominent")}
 
       <section class="painfit-figure-grid">
         <div class="painfit-panel flat">
@@ -2745,13 +3298,6 @@ function renderPainFitResults() {
           <span>회복이 느린 영역</span>
           <strong>${formatDomainList(intolerable)}</strong>
           <p>이 결의 일은 주업으로 삼기 전 실제 강도를 꼭 확인하세요.</p>
-        </article>
-        <article class="painfit-summary-card reliability ${stats.reliability < 65 ? "low" : ""}">
-          <span>평가 신뢰도</span>
-          <strong>${stats.reliability}점 · ${stats.label}</strong>
-          <p>${stats.note}</p>
-          <div class="painfit-reliability-meter" style="--reliability: ${stats.reliability}%"><i></i></div>
-          <small>근거 답변 ${stats.knownCount}/${PAINFIT_QUESTIONS.length} · 잘 모르겠다 ${stats.unknownCount}개 · 영역 ${stats.coveredDomains}/${PAINFIT_DOMAIN_KEYS.length}</small>
         </article>
       </section>
 
@@ -2947,6 +3493,7 @@ function render() {
         </main>
       </div>
       ${toastMessage ? `<div class="toast">${toastMessage}</div>` : ""}
+      ${renderAccessQrModal()}
     </div>
   `;
 }
@@ -3021,6 +3568,27 @@ function scrollToHomeSection(sectionId) {
   });
 }
 
+async function copyAccessUrl() {
+  const accessUrl = getAccessUrl();
+
+  try {
+    await navigator.clipboard.writeText(accessUrl);
+    setToast("접속 주소를 복사했어요.");
+    return;
+  } catch (error) {
+    const input = document.createElement("textarea");
+    input.value = accessUrl;
+    input.setAttribute("readonly", "");
+    input.style.position = "fixed";
+    input.style.left = "-9999px";
+    document.body.append(input);
+    input.select();
+    document.execCommand("copy");
+    input.remove();
+    setToast("접속 주소를 복사했어요.");
+  }
+}
+
 app.addEventListener("click", (event) => {
   const target = event.target.closest("[data-action]");
   if (!target) return;
@@ -3050,6 +3618,20 @@ app.addEventListener("click", (event) => {
     scrollToHomeSection(target.dataset.section);
   }
 
+  if (action === "open-access-qr") {
+    accessQrOpen = true;
+    render();
+  }
+
+  if (action === "close-access-qr") {
+    accessQrOpen = false;
+    render();
+  }
+
+  if (action === "copy-access-url") {
+    copyAccessUrl();
+  }
+
   if (action === "painfit-step") {
     painFitState = { ...painFitState, step: target.dataset.step || "intro" };
     savePainFitState();
@@ -3063,10 +3645,20 @@ app.addEventListener("click", (event) => {
       mode: target.dataset.mode || "youth",
       step: "quiz",
       currentQ: 0,
+      showDomainProgress: false,
     };
     savePainFitState();
     render();
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  if (action === "painfit-toggle-progress") {
+    painFitState = {
+      ...painFitState,
+      showDomainProgress: !painFitState.showDomainProgress,
+    };
+    savePainFitState();
+    render();
   }
 
   if (action === "painfit-answer") {
@@ -3501,6 +4093,12 @@ app.addEventListener("submit", (event) => {
     }), { silent: true });
     setToast("설정을 저장했어요.");
   }
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape" || !accessQrOpen) return;
+  accessQrOpen = false;
+  render();
 });
 
 function init() {
