@@ -2240,10 +2240,41 @@ button:focus-visible {
 
 .painfit-question-copy h2 {
   max-width: 880px;
-  margin: 0 0 1.5rem;
+  margin: 0 0 0.85rem;
   font-size: clamp(1.8rem, 4vw, 3.2rem);
   line-height: 1.2;
   letter-spacing: -0.06em;
+  word-break: keep-all;
+}
+
+.painfit-imagine-card {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0 0 1.15rem;
+  padding: clamp(0.85rem, 2vw, 1.05rem);
+  border: 1px solid rgba(44, 95, 93, 0.15);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(244, 239, 230, 0.76)),
+    radial-gradient(circle at 8% 0%, rgba(240, 200, 90, 0.18), transparent 38%);
+}
+
+.painfit-imagine-card span {
+  width: fit-content;
+  min-height: 26px;
+  padding: 0.26rem 0.62rem;
+  border-radius: 999px;
+  background: rgba(44, 95, 93, 0.1);
+  color: var(--pain-accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.painfit-imagine-card p {
+  margin: 0;
+  color: var(--pain-text);
+  font-size: clamp(0.95rem, 1.5vw, 1.04rem);
+  line-height: 1.68;
   word-break: keep-all;
 }
 

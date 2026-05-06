@@ -325,34 +325,146 @@ const PAINFIT_DOMAIN_IMAGES = {
   uncertainty: "./assets/generated/painfit/painfit-uncertainty-banner-v1.png",
 };
 const PAINFIT_QUESTION_SCENES = {
-  p1: { title: "발바닥이 퇴근하지 못한 주", caption: "오래 서 있는 일을 다음 주 몸이 어떻게 기억하는지 봅니다.", prop: "8h standing", bubble: "다음 주도 가능?" },
-  p2: { title: "의자가 나를 붙잡는 날", caption: "앉아 있는 피로가 편안함인지 답답함인지 확인합니다.", prop: "desk day", bubble: "몸이 굳네" },
-  p3: { title: "밤샘 요정의 청구서", caption: "수면 리듬이 흔들렸을 때 회복 비용을 봅니다.", prop: "late night", bubble: "내일 괜찮나" },
-  p4: { title: "소음, 냄새, 온도의 삼중주", caption: "환경 자극이 몸에 남는 시간을 확인합니다.", prop: "noise zone", bubble: "자극 과다" },
-  c1: { title: "자료 더미 속 탐정", caption: "조사 후에도 다음 날 다시 파고들 수 있는지 봅니다.", prop: "research", bubble: "단서 찾기" },
-  c2: { title: "20페이지 산책로", caption: "긴 글을 끝까지 따라가는 인지 체력을 봅니다.", prop: "20 pages", bubble: "끝까지 읽자" },
-  c3: { title: "정답 없는 퍼즐", caption: "모호한 문제를 오래 붙잡는 힘을 확인합니다.", prop: "no answer", bubble: "답이 어디에" },
-  c4: { title: "복잡한 관계도 정글", caption: "구조를 이해하는 일이 에너지인지 소모인지 봅니다.", prop: "system map", bubble: "선이 너무 많아" },
-  r1: { title: "매일 같은 버튼", caption: "반복이 안정감인지 지루함인지 확인합니다.", prop: "repeat x30", bubble: "또 이거네" },
-  r2: { title: "체크리스트 행진", caption: "정해진 절차가 편한지 답답한지 봅니다.", prop: "checklist", bubble: "순서대로" },
-  r3: { title: "문서 5회전 회전목마", caption: "같은 문서를 여러 번 보는 피로를 확인합니다.", prop: "review x5", bubble: "한 번 더?" },
-  r4: { title: "예측 가능한 하루", caption: "루틴이 마음을 안정시키는지 꺼지게 하는지 봅니다.", prop: "routine", bubble: "오늘도 같은 길" },
-  s1: { title: "낯선 사람 20명 미팅", caption: "사람을 많이 만난 뒤 다음 날 회복을 봅니다.", prop: "20 people", bubble: "안녕하세요 x20" },
-  s2: { title: "거절 도장 5개", caption: "거절을 받은 뒤 다시 시도할 수 있는지 확인합니다.", prop: "5 no", bubble: "다음 메시지?" },
-  s3: { title: "화난 고객의 먹구름", caption: "강한 감정을 마주한 뒤 잔상을 봅니다.", prop: "angry cloud", bubble: "진정해볼게요" },
-  s4: { title: "설득의 줄다리기", caption: "낯선 사람을 설득하는 일이 며칠 이어질 때를 봅니다.", prop: "persuade", bubble: "한 번만 더" },
-  e1: { title: "공개 피드백 무대", caption: "비판을 받은 뒤 다시 만들 수 있는지 확인합니다.", prop: "public review", bubble: "다시 고칠까" },
-  e2: { title: "마감 알람 합창단", caption: "압박이 이어질 때 마음의 회복 속도를 봅니다.", prop: "deadline", bubble: "마감이 온다" },
-  e3: { title: "책임 배낭 메고 걷기", caption: "혼자 책임지는 상황의 무게를 확인합니다.", prop: "big bag", bubble: "내가 맡았다" },
-  e4: { title: "폐기함 앞의 결과물", caption: "무시되거나 폐기된 뒤 다시 움직일 수 있는지 봅니다.", prop: "discarded", bubble: "다음 시안?" },
-  d1: { title: "숫자 한 자리 범인 찾기", caption: "작은 숫자 오류가 만든 재검토 피로를 봅니다.", prop: "digit error", bubble: "범인은 0?" },
-  d2: { title: "오타 사냥꾼의 하루", caption: "작은 오류를 계속 찾는 일이 맞는지 확인합니다.", prop: "typo hunt", bubble: "여기 오타" },
-  d3: { title: "100% 정확성 모드", caption: "완벽한 정확성이 매일 요구될 때를 봅니다.", prop: "100%", bubble: "틀리면 안 돼" },
-  d4: { title: "아주 작은 차이 확대경", caption: "미세한 차이를 오래 구분하는 부담을 봅니다.", prop: "tiny diff", bubble: "거의 같은데" },
-  u1: { title: "월급 그래프 롤러코스터", caption: "수입 변동이 마음에 남는 정도를 봅니다.", prop: "income wave", bubble: "이번 달은?" },
-  u2: { title: "오늘 할 일 빈 종이", caption: "스스로 정하는 자유가 에너지인지 부담인지 봅니다.", prop: "blank plan", bubble: "뭘 하지" },
-  u3: { title: "1년짜리 실험 티켓", caption: "실패 가능성이 큰 길에 투자하는 부담을 봅니다.", prop: "1 year bet", bubble: "해볼까" },
-  u4: { title: "갑작스러운 방향 전환", caption: "변화가 잦은 환경에서 회복 속도를 확인합니다.", prop: "sudden turn", bubble: "또 바뀜" },
+  p1: {
+    title: "발바닥이 퇴근하지 못한 주",
+    caption: "오래 서 있는 일을 다음 주 몸이 어떻게 기억하는지 봅니다.",
+    scenario: "매장, 행사장, 병원 같은 곳에서 쉬는 시간 빼고 거의 서서 하루를 보냈다고 떠올려보세요. 집에 와서 자고 난 뒤, 다음 주에도 같은 일정을 다시 시작할 수 있을지 몸의 반응을 상상해봅니다.",
+  },
+  p2: {
+    title: "의자가 나를 붙잡는 날",
+    caption: "앉아 있는 피로가 편안함인지 답답함인지 확인합니다.",
+    scenario: "아침부터 저녁까지 노트북 앞에 앉아 문서, 채팅, 화면을 계속 봤다고 생각해보세요. 몸은 편했는지, 허리와 목이 굳어서 다음 날까지 잔상이 남는지 떠올립니다.",
+  },
+  p3: {
+    title: "밤샘 요정의 청구서",
+    caption: "수면 리듬이 흔들렸을 때 회복 비용을 봅니다.",
+    scenario: "마감 때문에 새벽까지 깨어 있거나, 며칠 동안 잠드는 시간이 계속 밀렸다고 상상해보세요. 하루 쉬면 돌아오는지, 며칠 동안 집중력과 기분이 흐려지는지 봅니다.",
+  },
+  p4: {
+    title: "소음, 냄새, 온도의 삼중주",
+    caption: "환경 자극이 몸에 남는 시간을 확인합니다.",
+    scenario: "시끄러운 기계음, 강한 냄새, 덥고 추운 온도 변화가 있는 공간에서 일했다고 떠올려보세요. 일이 끝난 뒤 조용한 곳에 가면 바로 풀리는지, 몸이 계속 예민한지 살펴봅니다.",
+  },
+  c1: {
+    title: "자료 더미 속 탐정",
+    caption: "조사 후에도 다음 날 다시 파고들 수 있는지 봅니다.",
+    scenario: "검색창, 보고서, 기사, 표를 오가며 3시간 동안 필요한 근거를 찾았다고 생각해보세요. 다음 날 같은 주제를 다시 열었을 때 궁금함이 남는지, 머리가 피하는지 봅니다.",
+  },
+  c2: {
+    title: "20페이지 산책로",
+    caption: "긴 글을 끝까지 따라가는 인지 체력을 봅니다.",
+    scenario: "설명 많은 보고서나 논문 같은 긴 글을 처음부터 끝까지 읽어야 하는 상황을 떠올려보세요. 다 읽고 나서 핵심을 정리할 여력이 있는지, 다음 날까지 머리가 무거운지 봅니다.",
+  },
+  c3: {
+    title: "정답 없는 퍼즐",
+    caption: "모호한 문제를 오래 붙잡는 힘을 확인합니다.",
+    scenario: "누구도 답을 모르는 문제를 며칠 동안 붙잡고 가설을 세우고 다시 고친다고 상상해보세요. 답이 늦게 나와도 계속 생각할 수 있는지, 답답함이 크게 쌓이는지 봅니다.",
+  },
+  c4: {
+    title: "복잡한 관계도 정글",
+    caption: "구조를 이해하는 일이 에너지인지 소모인지 봅니다.",
+    scenario: "사람, 일정, 돈, 시스템이 서로 얽힌 구조도를 하루 종일 이해해야 한다고 떠올려보세요. 연결이 보이면 재미있는지, 선이 많아질수록 머리가 멈추는지 확인합니다.",
+  },
+  r1: {
+    title: "매일 같은 버튼",
+    caption: "반복이 안정감인지 지루함인지 확인합니다.",
+    scenario: "매일 같은 시간에 같은 순서로 같은 작업을 한 달 반복한다고 생각해보세요. 익숙해질수록 편해지는지, 내 시간이 멈춘 느낌이 드는지 살펴봅니다.",
+  },
+  r2: {
+    title: "체크리스트 행진",
+    caption: "정해진 절차가 편한지 답답한지 봅니다.",
+    scenario: "내 판단보다 매뉴얼과 체크리스트를 그대로 따라야 하는 일주일을 떠올려보세요. 실수 없이 끝내서 안정되는지, 내가 사라진 듯 답답한지 봅니다.",
+  },
+  r3: {
+    title: "문서 5회전 회전목마",
+    caption: "같은 문서를 여러 번 보는 피로를 확인합니다.",
+    scenario: "같은 문서를 고치고, 다시 읽고, 또 고치며 5번 반복 검토한다고 상상해보세요. 점점 정리되는 느낌인지, 같은 문장만 봐도 피로가 올라오는지 봅니다.",
+  },
+  r4: {
+    title: "예측 가능한 하루",
+    caption: "루틴이 마음을 안정시키는지 꺼지게 하는지 봅니다.",
+    scenario: "오늘 할 일과 내일 할 일이 거의 같은 환경에서 한 달을 보낸다고 떠올려보세요. 예측 가능해서 편한지, 새로움이 없어 의욕이 낮아지는지 살핍니다.",
+  },
+  s1: {
+    title: "낯선 사람 20명 미팅",
+    caption: "사람을 많이 만난 뒤 다음 날 회복을 봅니다.",
+    scenario: "하루 동안 처음 보는 사람들에게 인사하고, 설명하고, 짧은 대화를 계속 이어갔다고 생각해보세요. 집에 온 뒤 혼자 쉬면 다시 충전되는지, 다음 날 사람을 피하고 싶은지 봅니다.",
+  },
+  s2: {
+    title: "거절 도장 5개",
+    caption: "거절을 받은 뒤 다시 시도할 수 있는지 확인합니다.",
+    scenario: "제안 메시지나 상담에서 연달아 다섯 번 거절을 들었다고 떠올려보세요. 잠깐 속상해도 다음 사람에게 다시 말할 수 있는지, 며칠 동안 위축되는지 봅니다.",
+  },
+  s3: {
+    title: "화난 고객의 먹구름",
+    caption: "강한 감정을 마주한 뒤 잔상을 봅니다.",
+    scenario: "상대가 화를 내고, 불만을 말하고, 내 앞에서 감정이 커지는 상황을 상상해보세요. 대화가 끝난 뒤 마음을 놓을 수 있는지, 계속 그 장면이 떠오르는지 봅니다.",
+  },
+  s4: {
+    title: "설득의 줄다리기",
+    caption: "낯선 사람을 설득하는 일이 며칠 이어질 때를 봅니다.",
+    scenario: "관심 없는 사람에게 필요성을 설명하고, 질문을 받고, 다시 설득하는 일이 며칠 이어진다고 떠올려보세요. 게임처럼 느껴지는지, 에너지가 빠르게 닳는지 봅니다.",
+  },
+  e1: {
+    title: "공개 피드백 무대",
+    caption: "비판을 받은 뒤 다시 만들 수 있는지 확인합니다.",
+    scenario: "내가 만든 글, 디자인, 발표가 여러 사람 앞에서 평가받는 장면을 떠올려보세요. 비판을 들은 뒤 고칠 지점이 보이는지, 마음이 오래 굳어지는지 봅니다.",
+  },
+  e2: {
+    title: "마감 알람 합창단",
+    caption: "압박이 이어질 때 마음의 회복 속도를 봅니다.",
+    scenario: "며칠 동안 마감 알림이 계속 오고, 끝내야 할 일이 줄지 않는 상황을 상상해보세요. 압박 속에서 속도가 나는지, 끝난 뒤에도 긴장이 풀리지 않는지 봅니다.",
+  },
+  e3: {
+    title: "책임 배낭 메고 걷기",
+    caption: "혼자 책임지는 상황의 무게를 확인합니다.",
+    scenario: "결정도, 결과도, 문제가 생겼을 때의 설명도 내가 맡아야 하는 하루를 떠올려보세요. 부담이 있어도 중심을 잡는지, 혼자라는 느낌이 오래 남는지 봅니다.",
+  },
+  e4: {
+    title: "폐기함 앞의 결과물",
+    caption: "무시되거나 폐기된 뒤 다시 움직일 수 있는지 봅니다.",
+    scenario: "시간을 들여 만든 결과물이 채택되지 않거나 거의 보이지 않게 사라졌다고 상상해보세요. 아쉽지만 다음 시안을 만들 수 있는지, 허무함이 며칠 가는지 봅니다.",
+  },
+  d1: {
+    title: "숫자 한 자리 범인 찾기",
+    caption: "작은 숫자 오류가 만든 재검토 피로를 봅니다.",
+    scenario: "숫자 하나가 틀려서 표와 문서를 처음부터 다시 대조해야 한다고 떠올려보세요. 오류를 찾으면 시원한지, 작은 실수 하나에 크게 지치는지 봅니다.",
+  },
+  d2: {
+    title: "오타 사냥꾼의 하루",
+    caption: "작은 오류를 계속 찾는 일이 맞는지 확인합니다.",
+    scenario: "하루 종일 문장 속 오타, 띄어쓰기, 맞지 않는 표현을 찾아 표시한다고 생각해보세요. 눈이 피곤해도 몰입되는지, 작은 글자들이 부담으로 쌓이는지 봅니다.",
+  },
+  d3: {
+    title: "100% 정확성 모드",
+    caption: "완벽한 정확성이 매일 요구될 때를 봅니다.",
+    scenario: "실수 하나가 바로 문제로 이어지는 자료를 매일 다룬다고 떠올려보세요. 정확하게 맞추는 일이 안정감을 주는지, 늘 긴장한 채 일하게 되는지 봅니다.",
+  },
+  d4: {
+    title: "아주 작은 차이 확대경",
+    caption: "미세한 차이를 오래 구분하는 부담을 봅니다.",
+    scenario: "거의 비슷해 보이는 색, 숫자, 표현, 조건을 하루 종일 구분해야 한다고 생각해보세요. 차이를 발견하는 게 흥미로운지, 머리와 눈이 빠르게 지치는지 봅니다.",
+  },
+  u1: {
+    title: "월급 그래프 롤러코스터",
+    caption: "수입 변동이 마음에 남는 정도를 봅니다.",
+    scenario: "이번 달 수입과 다음 달 수입이 다를 수 있고, 몇 달 뒤를 정확히 예측하기 어려운 상황을 떠올려보세요. 유연하게 조정할 수 있는지, 계속 불안이 남는지 봅니다.",
+  },
+  u2: {
+    title: "오늘 할 일 빈 종이",
+    caption: "스스로 정하는 자유가 에너지인지 부담인지 봅니다.",
+    scenario: "출근했는데 누가 오늘 할 일을 정해주지 않고, 내가 우선순위와 순서를 직접 짜야 한다고 상상해보세요. 자유롭게 움직이는지, 시작 전부터 막막한지 봅니다.",
+  },
+  u3: {
+    title: "1년짜리 실험 티켓",
+    caption: "실패 가능성이 큰 길에 투자하는 부담을 봅니다.",
+    scenario: "성공할지 확실하지 않은 일에 1년 동안 시간과 에너지를 넣는다고 떠올려보세요. 실험으로 받아들일 수 있는지, 실패 가능성이 마음을 계속 누르는지 봅니다.",
+  },
+  u4: {
+    title: "갑작스러운 방향 전환",
+    caption: "변화가 잦은 환경에서 회복 속도를 확인합니다.",
+    scenario: "오늘 정한 계획이 오후에 바뀌고, 내일 또 우선순위가 바뀌는 환경을 상상해보세요. 방향 전환을 따라갈 수 있는지, 바뀔 때마다 에너지가 크게 빠지는지 봅니다.",
+  },
 };
 const PAINFIT_JOBS = [
   {
@@ -2978,14 +3090,20 @@ function renderPainFitDomainProgress(currentDomain) {
   `;
 }
 
-function renderPainFitQuestionVisual(question) {
+function getPainFitQuestionScene(question) {
   const domainScene = PAINFIT_DOMAIN_SCENES[question.domain] || PAINFIT_DOMAIN_SCENES.physical;
-  const questionScene = PAINFIT_QUESTION_SCENES[question.id] || {
+  return PAINFIT_QUESTION_SCENES[question.id] || {
     title: domainScene.title,
     caption: "이 상황을 상상하며 내 회복 속도를 골라보세요.",
+    scenario: "이 장면을 실제 하루처럼 떠올린 뒤, 쉬고 난 다음 몸과 마음이 어느 정도 회복될지 골라보세요.",
     prop: domainScene.label,
     bubble: "내 회복은?",
   };
+}
+
+function renderPainFitQuestionVisual(question) {
+  const domainScene = PAINFIT_DOMAIN_SCENES[question.domain] || PAINFIT_DOMAIN_SCENES.physical;
+  const questionScene = getPainFitQuestionScene(question);
   const imageSrc = PAINFIT_DOMAIN_IMAGES[question.domain] || PAINFIT_DOMAIN_IMAGES.physical;
 
   return `
@@ -3004,6 +3122,7 @@ function renderPainFitQuestionVisual(question) {
 
 function renderPainFitQuiz() {
   const question = PAINFIT_QUESTIONS[painFitState.currentQ] || PAINFIT_QUESTIONS[0];
+  const questionScene = getPainFitQuestionScene(question);
   const currentAnswer = painFitState.answers[question.id];
   const progress = ((painFitState.currentQ + 1) / PAINFIT_QUESTIONS.length) * 100;
   const answeredCount = Object.keys(painFitState.answers).length;
@@ -3037,6 +3156,10 @@ function renderPainFitQuiz() {
           <div class="painfit-question-copy">
             <span class="painfit-kicker">Q${painFitState.currentQ + 1}</span>
             <h2>${question.text}</h2>
+            <div class="painfit-imagine-card">
+              <span>상상 장면</span>
+              <p>${escapeHtml(questionScene.scenario || questionScene.caption)}</p>
+            </div>
             <div class="painfit-option-list">
               ${PAINFIT_OPTIONS.map(
                 (option, index) => `

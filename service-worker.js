@@ -1,4 +1,4 @@
-const CACHE_NAME = "beanything-v20260505j";
+const CACHE_NAME = "beanything-v20260506a";
 const APP_ASSETS = [
   "./",
   "./index.html",
