@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 4177",
+    "test:logic": "node tests/assessment-scoring.mjs && node tests/recommendation-coverage.mjs",
+    "test:smoke": "playwright test tests/beanything-smoke.spec.cjs",
+    "test": "npm run test:logic && npm run test:smoke"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}

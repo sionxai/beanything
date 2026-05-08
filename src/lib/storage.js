@@ -100,10 +100,19 @@ export function saveState(state) {
     },
   };
 
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+  } catch (error) {
+    console.error("Failed to save state", error);
+  }
+
   return nextState;
 }
 
 export function clearState() {
-  window.localStorage.removeItem(STORAGE_KEY);
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch (error) {
+    console.error("Failed to clear state", error);
+  }
 }

@@ -9,12 +9,42 @@
     />
     <meta name="theme-color" content="#2f6a53" />
     <title>Be Anything</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=20260506a" />
+    <link rel="manifest" href="./manifest.webmanifest?v=20260508a" />
     <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=20260506a" />
+    <link rel="stylesheet" href="./styles.css?v=20260508a" />
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="./src/app.js?v=20260506a"></script>
+    <script>
+      (() => {
+        const app = document.querySelector("#app");
+        const version = "20260508a";
+
+        if (window.location.protocol === "file:") {
+          app.innerHTML = `
+            <main class="file-warning-shell" role="alert">
+              <section class="file-warning-card">
+                <span>열기 방식 확인</span>
+                <h1>파일로 직접 열면 앱이 제대로 동작하지 않습니다.</h1>
+                <p>
+                  Be Anything은 브라우저 보안 정책 때문에 <strong>file://</strong> 주소가 아니라
+                  배포 주소나 개발 서버 주소에서 확인해야 합니다.
+                </p>
+                <div class="file-warning-actions">
+                  <a href="https://beanything.vercel.app/?v=${version}">배포 주소로 열기</a>
+                  <code>python3 -m http.server 4177</code>
+                </div>
+              </section>
+            </main>
+          `;
+          return;
+        }
+
+        const script = document.createElement("script");
+        script.type = "module";
+        script.src = `./src/app.js?v=${version}`;
+        document.body.append(script);
+      })();
+    </script>
   </body>
 </html>

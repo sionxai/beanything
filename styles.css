@@ -63,6 +63,80 @@ body::after {
   pointer-events: none;
 }
 
+.file-warning-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.file-warning-card {
+  display: grid;
+  gap: 1rem;
+  width: min(100%, 560px);
+  padding: clamp(1.4rem, 4vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.file-warning-card span {
+  width: fit-content;
+  min-height: 30px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.file-warning-card h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  line-height: 1.08;
+  letter-spacing: -0.06em;
+}
+
+.file-warning-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.file-warning-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.file-warning-actions a,
+.file-warning-actions code {
+  min-height: 46px;
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+}
+
+.file-warning-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+}
+
+.file-warning-actions code {
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface-soft);
+  color: var(--text);
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+
 img {
   display: block;
   max-width: 100%;
